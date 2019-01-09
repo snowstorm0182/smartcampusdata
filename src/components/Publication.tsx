@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 //import Select from 'react-select';
 
 const Publication = (
-    {title, id, tags, notes = [""], labels, done, toggleEdit = true, handleUpdatePublicationTitle, handleUpdatePublicationTags, handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}
+    {title, code, doi, id, tags, notes = [""], labels, done, toggleEdit = true, handleUpdatePublicationTitle, handleUpdatePublicationTags, handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}
   ) => {
     function handleToggleNameEdit(toggle) {
       alert('tetst');
@@ -30,6 +30,12 @@ const Publication = (
       handleUpdatePublicationNotes(id, [...notes, [""]])
     }
 
+    function _handleCrossRef(){
+      fetch('http://api.crossref.org/works/'+doi)
+        .then(result=>result.json())
+        .then(items=>{console.log(items);alert(items.message['is-referenced-by-count']);})
+    }
+
     return (<li>
   <h3 onClick={(e) => handleToggleNameEdit(!toggleEdit)}>{title}</h3>
   {(toggleEdit ? (<input
@@ -44,6 +50,9 @@ const Publication = (
     checked={done}
     onChange={(e) => handleTogglePublication(id, !done)}
   />
+  <div>
+    <button type="button" onClick={() =>  _handleCrossRef()}>Check Citation(1_sec_lim)</button>
+  </div>
   <div><h4>Notes:</h4>
   {notes.map((i, idx) => (
     <span>
@@ -75,6 +84,8 @@ onChange={(e) => handleSelectPublicationLabel(id, e.target.value)}
 Publication.propTypes = {
   title: PropTypes.string.isRequired,
   id: PropTypes.number.isRequired,
+  code: PropTypes.string,
+  doi: PropTypes.string,
   tags: PropTypes.array,
   notes: PropTypes.array,
   labels: PropTypes.array,

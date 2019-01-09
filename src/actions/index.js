@@ -26,9 +26,9 @@ export function loadPublications(action) {
   };
 }
 
-export function addPublication(title) {
+export function addPublication(publication) {
   return (dispatch) => {
-    const publicationToAdd = { title };
+    const publicationToAdd = publication;
     db.table('publications')
       .add(publicationToAdd)
       .then((id) => {

@@ -9,22 +9,28 @@ class AddPublication extends Component<any, any> {
 
   constructor(props: any) {
     super(props);
-    this.state = {value: ''};
+    this.state = {title: '', code:'', doi:''};
     this.addPublication = this.addPublication.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   addPublication() {
-    this.props.handleAddPublication(this.state.value);
+    this.props.handleAddPublication(this.state);
   }
 
   handleChange(newValue: any) {
     this.setState({value: newValue});
   }
 
+  handleChangeEvent (evt) {
+    this.setState({ [evt.target.name]: evt.target.value });
+  }
+
   render() {
     return (<div>
-      <input type="text" value={this.state.value} onChange={(e) => this.handleChange(e.target.value)} />
+      <input name="title" type="text" value={this.state.name} onChange={(e) => this.handleChangeEvent(e)} />
+      <input name="code" type="text" value={this.state.code} onChange={(e) => this.handleChangeEvent(e)} />
+      <input name="doi" type="text" value={this.state.doi} onChange={(e) => this.handleChangeEvent(e)} />
       <button type="button" onClick={this.addPublication}>Add Publication</button>
     </div>);
   }
