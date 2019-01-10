@@ -31,7 +31,7 @@ const Publication = (
     }
 
     function _handleCrossRef(){
-      fetch('http://api.crossref.org/works/'+doi)
+      fetch('https://api.crossref.org/works/'+doi)
         .then(result=>result.json())
         .then(items=>{console.log(items);alert(items.message['is-referenced-by-count']);})
     }

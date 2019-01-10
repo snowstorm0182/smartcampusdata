@@ -28,9 +28,12 @@ class AddPublication extends Component<any, any> {
 
   render() {
     return (<div>
-      <input name="title" type="text" value={this.state.name} onChange={(e) => this.handleChangeEvent(e)} />
-      <input name="code" type="text" value={this.state.code} onChange={(e) => this.handleChangeEvent(e)} />
-      <input name="doi" type="text" value={this.state.doi} onChange={(e) => this.handleChangeEvent(e)} />
+      <label>Title:
+      <input name="title" type="text" value={this.state.name} onChange={(e) => this.handleChangeEvent(e)} /></label>
+      <label>Code:
+      <input name="code" type="text" value={this.state.code} onChange={(e) => this.handleChangeEvent(e)} /></label>
+      <label>Doi:
+      <input name="doi" type="text" value={this.state.doi} onChange={(e) => this.handleChangeEvent(e)} /></label>
       <button type="button" onClick={this.addPublication}>Add Publication</button>
     </div>);
   }

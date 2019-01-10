@@ -7,12 +7,12 @@ import AddPublication from './AddPublication';
 import PublicationList from './PublicationList';
 
 const PublicationApp = (
-    {publications, labels, handleUpdatePublicationTitle,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
+    {publications, labels, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
   ) => <div className="PublicationApp">
   <div className="PublicationApp-header">
-    <h2>Publications</h2>
+    <h2>Publications <button onClick={(e) => handleVisibilityUpdatePublicationAdd({addPublication:!visibility.addPublication})}>Add form</button></h2>
   </div>
-  <AddPublication handleAddPublication={handleAddPublication} />
+  {visibility.addPublication && (<AddPublication handleAddPublication={handleAddPublication} />)}
   <PublicationList
     publications={publications}
     labels={labels}
@@ -32,6 +32,8 @@ PublicationApp.propTypes = {
     done: PropTypes.bool,
   })),
   labels: PropTypes.array,
+  visibility: PropTypes.object,
+  handleVisibilityUpdatePublicationAdd: PropTypes.func.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,
   handleUpdatePublicationTags: PropTypes.func.isRequired,
   handleUpdatePublicationNotes: PropTypes.func.isRequired,

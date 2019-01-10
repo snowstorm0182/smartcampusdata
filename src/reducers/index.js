@@ -45,7 +45,15 @@ import { combineReducers } from 'redux'
 import publications from './publications'
 import labels from './labels'
 
+function visibility(state = [], { type, payload }) {
+  switch (type) {
+    case 'foo': return {...state, ...payload};
+    default: return state;
+  }
+}
+
 export default combineReducers({
   publications,
-  labels
+  labels,
+  visibility
 })

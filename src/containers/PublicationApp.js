@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PublicationApp from '../components/PublicationApp';
 
 import {
+  showPublicationAdd,
   addPublication,
   updatePublication,
   updatePublicationTitle,
@@ -12,15 +13,19 @@ import {
 } from '../actions';
 
 function mapStateToProps(state) {
-  const { publications, labels } = state;
+  const { publications, labels, visibility } = state;
   return {
     publications,
-    labels
+    labels,
+    visibility
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
+    handleVisibilityUpdatePublicationAdd(value) {
+      dispatch(showPublicationAdd(value));
+    },
     handleAddPublication(title) {
       dispatch(addPublication(title));
     },

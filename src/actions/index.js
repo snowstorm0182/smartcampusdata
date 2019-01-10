@@ -26,6 +26,15 @@ export function loadPublications(action) {
   };
 }
 
+export function showPublicationAdd(value){
+  return (dispatch) => {
+    dispatch({
+      type: 'foo',
+      payload: value,
+    });
+  }
+}
+
 export function addPublication(publication) {
   return (dispatch) => {
     const publicationToAdd = publication;

@@ -64,8 +64,9 @@ class App extends React.Component {
           <LabelApp />
         </Provider>
         <Hello name="TypeScript" enthusiasmLevel={10} />
+        <label>Import/export </label>
         <textarea onChange={(e) => this._import(e.target.value)} />
-        <button onClick={(e) => this._export()} />
+        <button onClick={(e) => this._export()}>Export</button>
       </div>
     );
   }
