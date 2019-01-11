@@ -8,7 +8,7 @@ const initialState = {
   labels: [],
   //live only
   visibility: {addPublication:false},
-  filters: [],
+  //filters: [],
 };
 
 const store = createStore(

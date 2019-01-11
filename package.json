@@ -22,6 +22,8 @@
     "@types/react": "^16.7.18",
     "@types/react-dom": "^16.0.11",
     "@types/react-redux": "^6.0.12",
+    "bibtex": "^0.9.0",
+    "bibtex-parse-js": "0.0.24",
     "dexie": "^2.0.4",
     "gh-pages": "^2.0.1",
     "react-redux": "^6.0.0",
