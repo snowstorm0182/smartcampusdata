@@ -55,7 +55,7 @@ const Publication = (
   </div>
   <div><h4>Notes:</h4>
   {notes.map((i, idx) => (
-    <span>
+    <span key={'span' + idx}>
     <textarea key={idx} value={i} onChange={(e) => _handleUpdatePublicationNotes(id, idx, e.target.value)} />
     <input type="checkbox" onChange={(e) => _handleDeletePublicationNote(id, idx)} />
     </span>
@@ -63,16 +63,17 @@ const Publication = (
   <button type="button" onClick={() =>  _handleAddPublicationNote(id)}>Add note</button></div>
   <select
     name="tags"
-    value={tags}
+    defaultValue={tags}
     multiple
     onChange={(e) =>  handleUpdatePublicationTags(id, [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
-    {labels.map((i) => (<option key={i.id} value={i.id} selected={tags && tags.includes(i.id)}>{i.title}</option>))}
+    {labels.map((i) => (<option key={i.id} value={i.id}>{i.title}</option>))}
   </select>
   <button type="button" onClick={() => handleDeletePublication(id)}>Delete</button>
 </li>)
 }
 
 /*
+{labels.map((i) => (<option key={i.id} value={i.id} selected={tags && tags.includes(i.id)}>{i.title}</option>))}
 onChange={(e) => handleSelectPublicationLabel(id, e.target.value)}
 <Select
       value={tags}
