@@ -27,12 +27,18 @@ import db from './db';
 import {exportDbData} from './actions';
 import {importDbData} from './actions';
 
+import { saveAs } from 'file-saver';
+import { format } from 'date-fns'
+
 function exportFunc() {
   (async ()=>{
       // Export
       const allData = await exportDbData (db);
       const serialized = JSON.stringify(allData);
-      alert(serialized);
+      //alert(serialized);
+      var blob = new Blob([serialized], {type: "text/plain;charset=utf-8"});
+      var stamp = format(new Date(), "YYYYMMDD-HHmm")
+      saveAs(blob, "data-"+stamp+".json");
   })()
 }
 
@@ -41,7 +47,7 @@ function importFunc(data) {
     const jsonToImport = data;
     const dataToImport = JSON.parse(jsonToImport);
     await importDbData(dataToImport, db);
-  })()
+  })().then(window.location.reload(false)); // 1
 }
 
 class App extends React.Component {
