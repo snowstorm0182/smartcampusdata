@@ -7,7 +7,7 @@ import AddPublication from './AddPublication';
 import PublicationList from './PublicationList';
 
 const PublicationApp = (
-    {publications, labels, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
+    {publications, labels, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
   ) => <div className="PublicationApp">
   <div className="PublicationApp-header">
     <h2>Publications <button onClick={(e) => handleVisibilityUpdatePublicationAdd({addPublication:!visibility.addPublication})}>Add form</button></h2>
@@ -17,6 +17,7 @@ const PublicationApp = (
     publications={publications}
     labels={labels}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
+    handleUpdatePublicationEdit={handleUpdatePublicationEdit}
     handleUpdatePublicationTags={handleUpdatePublicationTags}
     handleUpdatePublicationNotes={handleUpdatePublicationNotes}
     handleTogglePublication={handleUpdatePublication}
@@ -30,11 +31,13 @@ PublicationApp.propTypes = {
     id: PropTypes.number.isRequired,
     tags: PropTypes.array,
     done: PropTypes.bool,
+    toggleEdit: PropTypes.bool,
   })),
   labels: PropTypes.array,
   visibility: PropTypes.object,
   handleVisibilityUpdatePublicationAdd: PropTypes.func.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,
+  handleUpdatePublicationEdit: PropTypes.func.isRequired,
   handleUpdatePublicationTags: PropTypes.func.isRequired,
   handleUpdatePublicationNotes: PropTypes.func.isRequired,
   handleUpdatePublication: PropTypes.func.isRequired,

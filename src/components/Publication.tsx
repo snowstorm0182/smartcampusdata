@@ -3,11 +3,10 @@ import * as PropTypes from 'prop-types';
 //import Select from 'react-select';
 
 const Publication = (
-    {title, code, doi, id, tags, notes = [""], labels, done, toggleEdit = true, handleUpdatePublicationTitle, handleUpdatePublicationTags, handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}
+    {title, code, doi, id, crossref = {}, tags, notes = [], labels, done, edit = false, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags, handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}
   ) => {
     function handleToggleNameEdit(toggle) {
-      alert('tetst');
-      toggleEdit = toggle;
+      handleUpdatePublicationEdit(id, toggle)
     };
 
     function _handleUpdatePublicationNotes(id, nth, newValue){
@@ -37,13 +36,18 @@ const Publication = (
     }
 
     return (<li>
-  <h3 onClick={(e) => handleToggleNameEdit(!toggleEdit)}>{title}</h3>
-  {(toggleEdit ? (<input
+  <h3 onClick={(e) => handleToggleNameEdit(!edit)}>{title}</h3>
+  <p style={{marginTop : '-1em'}}>
+    {
+    "notes:" + notes.length + ", " + labels.filter((i) => (tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
+    crossref['author'][0]['family'] + " - " + crossref['container-title'][0]
+  }</p>
+  {(edit ? (<div><input
     name="title"
     type="text"
     value={title}
     onChange={(e) => handleUpdatePublicationTitle(id, e.target.value)}
-  />):null)}
+  />
   <input
     name="done"
     type="checkbox"
@@ -69,7 +73,7 @@ const Publication = (
     {labels.map((i) => (<option key={i.id} value={i.id}>{i.title}</option>))}
   </select>
   <button type="button" onClick={() => handleDeletePublication(id)}>Delete</button>
-</li>)
+</div>):null)}</li>)
 }
 
 /*

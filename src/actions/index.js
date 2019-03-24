@@ -3,6 +3,7 @@ import {
   ADD_PUBLICATION,
   UPDATE_PUBLICATION,
   UPDATE_PUBLICATION_TITLE,
+  UPDATE_PUBLICATION_EDIT,
   UPDATE_PUBLICATION_TAG,
   UPDATE_PUBLICATION_NOTES,
   DELETE_PUBLICATION,
@@ -84,6 +85,20 @@ export function updatePublicationTitle(id, title) {
         dispatch({
           type: UPDATE_PUBLICATION_TITLE,
           payload: { id, title },
+        });
+      });
+  };
+}
+
+export function updatePublicationEdit(id, edit) {
+  return (dispatch) => {
+    debugger;
+    db.table('publications')
+      .update(id, { edit })
+      .then(() => {
+        dispatch({
+          type: UPDATE_PUBLICATION_EDIT,
+          payload: { id, edit },
         });
       });
   };

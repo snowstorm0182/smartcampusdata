@@ -32,10 +32,8 @@ import { format } from 'date-fns'
 
 function exportFunc() {
   (async ()=>{
-      // Export
       const allData = await exportDbData (db);
       const serialized = JSON.stringify(allData);
-      //alert(serialized);
       var blob = new Blob([serialized], {type: "text/plain;charset=utf-8"});
       var stamp = format(new Date(), "YYYYMMDD-HHmm")
       saveAs(blob, "data-"+stamp+".json");
@@ -60,7 +58,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
+      <div className="App" style={{marginBottom : '1em'}}>
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Publications review App</h1>

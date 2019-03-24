@@ -7,6 +7,7 @@ import {
   addPublication,
   updatePublication,
   updatePublicationTitle,
+  updatePublicationEdit,
   updatePublicationTags,
   updatePublicationNotes,
   deletePublication,
@@ -37,6 +38,9 @@ function mapDispatchToProps(dispatch) {
     },
     handleUpdatePublicationTitle(id, title) {
       dispatch(updatePublicationTitle(id, title));
+    },
+    handleUpdatePublicationEdit(id, edit) {
+      dispatch(updatePublicationEdit(id, edit));
     },
     handleUpdatePublicationTags(id, tags) {
       dispatch(updatePublicationTags(id, tags));
