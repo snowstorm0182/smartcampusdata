@@ -7,5 +7,12 @@ db.version(1).stores({
   notes: '++id,publicationsId',
   notelabels: '++id,notesId,labelsId',
 });
+db.version(2).stores({
+  labels: '++id',
+  quotes: '++id',
+  publications: '++id',
+  notes: '++id,publicationsId',
+  notelabels: '++id,notesId,labelsId',
+});
 
 export default db;

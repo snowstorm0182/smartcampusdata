@@ -20,6 +20,14 @@ import {LOAD_LABELS} from './constants';
 
 store.dispatch(loadLabels(LOAD_LABELS));
 
+// QUOTES
+import QuoteApp from './containers/QuoteApp';
+
+import {loadQuotes} from './actions';
+import {LOAD_QUOTES} from './constants';
+
+store.dispatch(loadQuotes(LOAD_QUOTES));
+
 import logo from './logo.svg';
 
 import Dexie from 'dexie';
@@ -66,6 +74,7 @@ class App extends React.Component {
         <Provider store={store}>
           <PublicationApp />
           <LabelApp />
+          <QuoteApp />
         </Provider>
         <Hello name="TypeScript" enthusiasmLevel={10} />
         <label>Import/export </label>

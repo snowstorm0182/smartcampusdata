@@ -44,6 +44,7 @@ export default function (state, { type, payload }) {
 import { combineReducers } from 'redux'
 import publications from './publications'
 import labels from './labels'
+import quotes from './quotes'
 
 function visibility(state = [], { type, payload }) {
   switch (type) {
@@ -55,5 +56,6 @@ function visibility(state = [], { type, payload }) {
 export default combineReducers({
   publications,
   labels,
+  quotes,
   visibility
 })

@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 //import Select from 'react-select';
 
 const Publication = (
-    {title, code, doi, id, crossref = {}, tags = [""], notes = [], labels, done = false, edit = false, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags, handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}
+    {title, code, doi, id, crossref = {}, tags = [""], notes = [], labels, quotes, done = false, edit = false, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags, handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}
   ) => {
     function handleToggleNameEdit(toggle) {
       handleUpdatePublicationEdit(id, toggle)
@@ -38,11 +38,19 @@ const Publication = (
     return (<li>
   <h3 onClick={(e) => handleToggleNameEdit(!edit)}>{title}</h3>
   <p style={{marginTop : '-1em'}}>
-    {tags.includes("1s")}
+    {"id:" + id + ", "}
     {
     "notes:" + notes.length + ", " + labels.filter((i) => (tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
     crossref['author'][0]['family'] + " - " + crossref['container-title'][0]
   }</p>
+  <div>{(
+    quotes.filter((i) => (i.publicationId == id)).map((i) => (
+      <div style={{margin : '1em', border: '1px solid darkgrey', backgroundColor: 'lightgrey', padding: '.5em'}}>
+      {i.text}
+      </div>
+    ))
+  )}
+  </div>
   {(edit ? (<div><input
     name="title"
     type="text"
@@ -95,6 +103,7 @@ Publication.propTypes = {
   tags: PropTypes.array,
   notes: PropTypes.array,
   labels: PropTypes.array,
+  quotes: PropTypes.array,
   done: PropTypes.bool,
   toggleEdit: PropTypes.bool,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,

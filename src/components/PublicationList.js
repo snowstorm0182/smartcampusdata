@@ -3,11 +3,12 @@ import * as PropTypes from 'prop-types';
 
 import Publication from './Publication';
 
-const PublicationList = ({publications, labels, handleUpdatePublicationTitle, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) => <ul>
+const PublicationList = ({publications, labels, quotes, handleUpdatePublicationTitle, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) => <ul>
   {publications.map((publication) => <Publication
     key={publication.id}
     {...publication}
     labels={labels}
+    quotes={quotes}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
     handleUpdatePublicationEdit={handleUpdatePublicationEdit}
     handleTogglePublication={handleTogglePublication}
@@ -27,6 +28,7 @@ PublicationList.propTypes = {
     edit: PropTypes.bool,
   })),
   labels: PropTypes.array.isRequired,
+  quotes: PropTypes.array.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,
   handleUpdatePublicationEdit: PropTypes.func.isRequired,
   handleUpdatePublicationTags: PropTypes.func.isRequired,

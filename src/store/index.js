@@ -6,6 +6,7 @@ import rootReducer from '../reducers';
 const initialState = {
   publications: [],
   labels: [],
+  quotes: [],
   //live only
   visibility: {addPublication:false},
   //filters: [],

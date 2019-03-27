@@ -11,6 +11,10 @@ import {
   ADD_LABEL,
   UPDATE_LABEL,
   DELETE_LABEL,
+  LOAD_QUOTES,
+  ADD_QUOTE,
+  UPDATE_QUOTE,
+  DELETE_QUOTE,
 } from '../constants';
 import db from '../db';
 
@@ -179,6 +183,60 @@ export function updateLabel(id, title) {
         dispatch({
           type: UPDATE_LABEL,
           payload: { id, title },
+        });
+      });
+  };
+}
+
+export function loadQuotes(action) {
+  return (dispatch) => {
+    db.table('quotes')
+      .toArray()
+      .then((quotes) => {
+        dispatch({
+          type: LOAD_QUOTES,
+          payload: quotes,
+        });
+      });
+  };
+}
+
+export function addQuote(text) {
+  return (dispatch) => {
+    const quoteToAdd = { text };
+    db.table('quotes')
+      .add(quoteToAdd)
+      .then((id) => {
+         dispatch({
+           type: ADD_QUOTE,
+           payload: Object.assign({}, quoteToAdd, { id }),
+         });
+      });
+  }
+}
+
+export function deleteQuote(id) {
+  return (dispatch) => {
+    db.table('quotes')
+      .delete(id)
+      .then(() => {
+        dispatch({
+          type: DELETE_QUOTE,
+          payload: id,
+        });
+      });
+  };
+}
+
+export function updateQuote(id, key, val) {
+  return (dispatch) => {
+    debugger;
+    db.table('quotes')
+      .update(id, { [key]: val })
+      .then(() => {
+        dispatch({
+          type: UPDATE_QUOTE,
+          payload: { id, key: key, val: val },
         });
       });
   };

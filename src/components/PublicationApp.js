@@ -7,7 +7,7 @@ import AddPublication from './AddPublication';
 import PublicationList from './PublicationList';
 
 const PublicationApp = (
-    {publications, labels, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
+    {publications, labels, quotes, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
   ) => <div className="PublicationApp">
   <div className="PublicationApp-header">
     <h2>Publications <button onClick={(e) => handleVisibilityUpdatePublicationAdd({addPublication:!visibility.addPublication})}>Add form</button></h2>
@@ -16,6 +16,7 @@ const PublicationApp = (
   <PublicationList
     publications={publications}
     labels={labels}
+    quotes={quotes}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
     handleUpdatePublicationEdit={handleUpdatePublicationEdit}
     handleUpdatePublicationTags={handleUpdatePublicationTags}
@@ -34,6 +35,7 @@ PublicationApp.propTypes = {
     toggleEdit: PropTypes.bool,
   })),
   labels: PropTypes.array,
+  quotes: PropTypes.array,
   visibility: PropTypes.object,
   handleVisibilityUpdatePublicationAdd: PropTypes.func.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,
