@@ -34,6 +34,7 @@ import Dexie from 'dexie';
 import db from './db';
 import {exportDbData} from './actions';
 import {importDbData} from './actions';
+import {appendQuotes} from './actions';
 
 import { saveAs } from 'file-saver';
 import { format } from 'date-fns'
@@ -53,12 +54,22 @@ function importFunc(data) {
     const jsonToImport = data;
     const dataToImport = JSON.parse(jsonToImport);
     await importDbData(dataToImport, db);
-  })().then(window.location.reload(false)); // 1
+  })().then(window.location.reload(false));
+}
+
+function importQuotesFunc(data) {
+  (async ()=>{
+    const dataToImport = JSON.parse(data);
+    await appendQuotes(dataToImport, db);
+  })().then(window.location.reload(false));
 }
 
 class App extends React.Component {
   _import(data) {
     importFunc(data);
+  }
+  _import_quotes(data) {
+    importQuotesFunc(data);
   }
   _export(data) {
     exportFunc(data);
@@ -80,6 +91,10 @@ class App extends React.Component {
         <label>Import/export </label>
         <textarea onChange={(e) => this._import(e.target.value)} />
         <button onClick={(e) => this._export()}>Export</button>
+        <div>
+          <label>Import quotes</label>
+          <textarea onChange={(e) => this._import_quotes(e.target.value)} />
+        </div>
       </div>
     );
   }

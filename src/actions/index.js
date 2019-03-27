@@ -275,3 +275,19 @@ export function importDbData(data: TableDump[], db: Dexie) {
               .then(()=>db.table(t.table).bulkAdd(t.rows))));
     });
 }
+
+export function appendQuotes(data: TableDump[], db: Dexie) {
+    /**
+    * json sample id is publicationId
+    {"id": 1, "quotes": [
+      {"text": "fooo", "type": "terms"},
+      {"text": "bar", "type": ""}
+    ]}
+    */
+    return db.transaction('rw', db.tables, () => {
+        return Promise.all(data.quotes.map (t => {
+          t.publicationId = data.id;
+          return db.table('quotes').add(t)
+        }));
+    });
+}
