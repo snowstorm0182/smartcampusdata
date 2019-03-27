@@ -15,6 +15,7 @@ const QuoteList = ({quotes, handleUpdateQuote, handleDeleteQuote}) => <ul>
 QuoteList.propTypes = {
   quotes: PropTypes.arrayOf(PropTypes.shape({
     text: PropTypes.string.isRequired,
+    type: PropTypes.string,
     id: PropTypes.number.isRequired,
     publicationId: PropTypes.number,
   })),
