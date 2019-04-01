@@ -4,7 +4,8 @@ import * as PropTypes from 'prop-types';
 import Quote from './Quote';
 
 const QuoteList = ({quotes, handleUpdateQuote, handleDeleteQuote}) => <ul>
-  {quotes.map((quote) => <Quote
+  {
+  quotes.map((quote) => <Quote
     key={quote.id}
     {...quote}
     handleDeleteQuote={handleDeleteQuote}

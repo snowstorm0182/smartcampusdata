@@ -1,11 +1,16 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
-const Quote = ({text, id, type, publicationId, handleUpdateQuote, handleDeleteQuote}) => <li>
+const Quote = ({text, id, comment, type, publicationId, handleUpdateQuote, handleDeleteQuote}) => <li>
   <label>Quote
   <textarea
     value={text}
     onChange={(e) => handleUpdateQuote(id, 'text', e.target.value)}
+  /></label>
+  <label>Comment
+  <textarea
+    value={comment}
+    onChange={(e) => handleUpdateQuote(id, 'comment', e.target.value)}
   /></label>
   <label>Type
   <textarea
@@ -15,6 +20,7 @@ const Quote = ({text, id, type, publicationId, handleUpdateQuote, handleDeleteQu
   <label>Publication
   <input
     type="number"
+    style={{width : '3.5em'}}
     value={publicationId}
     onChange={(e) => handleUpdateQuote(id, 'publicationId', +e.target.value)}
   /></label>
@@ -24,6 +30,7 @@ const Quote = ({text, id, type, publicationId, handleUpdateQuote, handleDeleteQu
 
 Quote.propTypes = {
   text: PropTypes.string.isRequired,
+  comment: PropTypes.string,
   type: PropTypes.string,
   id: PropTypes.number.isRequired,
   publicationId: PropTypes.number,

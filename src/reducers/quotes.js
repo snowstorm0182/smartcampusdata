@@ -14,8 +14,11 @@ export default function quotes(state = [], { type, payload }) {
       debugger;
       const quoteToUpdate = state.find((quote) => quote.id === payload.id);
       return [
-        ...state.filter((quote) => quote.id !== payload.id),
-        Object.assign({}, quoteToUpdate, { [payload.key]: payload.val }),
+        ...state.map(q => {
+          if(q.id == payload.id)
+            return Object.assign({}, quoteToUpdate, { [payload.key]: payload.val });
+          return q;
+        })
       ];
     }
     case DELETE_QUOTE: return state.filter((quote) => quote.id !== payload);

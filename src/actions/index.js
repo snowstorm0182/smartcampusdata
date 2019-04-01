@@ -284,9 +284,20 @@ export function appendQuotes(data: TableDump[], db: Dexie) {
       {"text": "bar", "type": ""}
     ]}
     */
+    var ldone = [];
     return db.transaction('rw', db.tables, () => {
         return Promise.all(data.quotes.map (t => {
           t.publicationId = data.id;
+          if (t.labels) {
+            [...new Set(t.labels)].map (l => {
+              db.table('labels').where('title').equals(l).count().then(function (r){
+                if (!r && !ldone.includes(l)) {
+                  ldone.push(l);
+                  db.table('labels').add({'title':l});
+                }
+              });
+            });
+          }
           return db.table('quotes').add(t)
         }));
     });
