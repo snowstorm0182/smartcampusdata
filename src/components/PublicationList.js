@@ -3,7 +3,8 @@ import * as PropTypes from 'prop-types';
 
 import Publication from './Publication';
 
-const PublicationList = ({publications, labels, quotes, handleUpdatePublicationTitle, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) => <ul>
+const PublicationList = ({publications, labels, quotes, handleUpdatePublicationTitle, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) =>
+<ul style={{paddingLeft : '0'}}>
   {publications.map((publication) => <Publication
     key={publication.id}
     {...publication}

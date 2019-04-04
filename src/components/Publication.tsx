@@ -43,10 +43,14 @@ const Publication = (
     "notes:" + notes.length + ", " + labels.filter((i) => (tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
     crossref['author'][0]['family'] + " - " + crossref['container-title'][0]
   }</p>
-  <div>{(
+  <div className="quotes__item--publication">{(
     quotes.filter((i) => (i.publicationId == id)).map((i) => (
-      <div style={{margin : '1em', border: '1px solid darkgrey', backgroundColor: 'lightgrey', padding: '.5em'}}>
-      {i.text}
+      <div className="quotes__item-wrap">
+        {(i.labels ? (<span>{(i.labels || "")}</span>):null)}
+        <div style={{border: '1px solid darkgrey', backgroundColor: 'lightgrey', padding: '.5em'}}
+          title={i.labels + "\n" + i.desc} className="quotes__item">
+        {i.text}
+        </div>
       </div>
     ))
   )}
