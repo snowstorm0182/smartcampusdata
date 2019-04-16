@@ -45,9 +45,9 @@ const Publication = (
   }</p>
   <div className="quotes__item--publication">{(
     quotes.filter((i) => (i.publicationId == id)).map((i) => (
-      <div className="quotes__item-wrap">
+      <div key={'quotewrap-'+i.id} className="quotes__item-wrap">
         {(i.labels ? (<span>{(i.labels || "")}</span>):null)}
-        <div style={{border: '1px solid darkgrey', backgroundColor: 'lightgrey', padding: '.5em'}}
+        <div key={'quote-'+i.id} style={{border: '1px solid darkgrey', backgroundColor: 'lightgrey', padding: '.5em'}}
           title={i.labels + "\n" + i.desc} className="quotes__item">
         {i.text}
         </div>
