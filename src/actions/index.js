@@ -272,7 +272,8 @@ export function importDbData(data: TableDump[], db: Dexie) {
     return db.transaction('rw', db.tables, () => {
         return Promise.all(data.map (t =>
             db.table(t.table).clear()
-              .then(()=>db.table(t.table).bulkAdd(t.rows))));
+              .then(()=>db.table(t.table).bulkAdd(t.rows))))
+              .then(window.location.reload(false));
     });
 }
 

@@ -54,7 +54,7 @@ function importFunc(data) {
     const jsonToImport = data;
     const dataToImport = JSON.parse(jsonToImport);
     await importDbData(dataToImport, db);
-  })().then(window.location.reload(false));
+  })();
 }
 
 function importQuotesFunc(data) {
