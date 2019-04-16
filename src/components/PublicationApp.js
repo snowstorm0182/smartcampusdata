@@ -5,6 +5,7 @@ import * as PropTypes from 'prop-types';
 
 import AddPublication from './AddPublication';
 import PublicationList from './PublicationList';
+import PublicationExport from './PublicationExport';
 
 const PublicationApp = (
     {publications, labels, quotes, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
@@ -14,6 +15,17 @@ const PublicationApp = (
   </div>
   {visibility.addPublication && (<AddPublication handleAddPublication={handleAddPublication} />)}
   <PublicationList
+    publications={publications}
+    labels={labels}
+    quotes={quotes}
+    handleUpdatePublicationTitle={handleUpdatePublicationTitle}
+    handleUpdatePublicationEdit={handleUpdatePublicationEdit}
+    handleUpdatePublicationTags={handleUpdatePublicationTags}
+    handleUpdatePublicationNotes={handleUpdatePublicationNotes}
+    handleTogglePublication={handleUpdatePublication}
+    handleDeletePublication={handleDeletePublication}
+  />
+  <PublicationExport
     publications={publications}
     labels={labels}
     quotes={quotes}
