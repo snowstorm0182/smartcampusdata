@@ -54,7 +54,7 @@ class PublicationExport extends React.Component {
 
   render = () => { return (
     <div>
-    <h3>Article outlines</h3>
+    <h2>Article outlines</h2>
     <label name='table' onClick={(e) => this.onToggle(e, e.target.getAttribute('name'))}>Show articles<input type='checkbox' checked={this.state.table} disabled/></label>
     <label name='sources' onClick={(e) => this.onToggle(e, e.target.getAttribute('name'))}>Show publications<input type='checkbox' checked={this.state.sources} disabled/></label>
     <button onClick={(e) => this.onCopyApa()}>copy apa</button>
