@@ -9,7 +9,19 @@ class PublicationExport extends React.Component {
     super(props);
   }
 
-  state = { table: false, sources:false, citations: false, references: []};
+  state = {
+    table: false,
+    tableformat: 'table',
+    sources:false,
+    citations: false,
+    references: []
+  };
+
+  assignState = (k, v) => {
+    this.setState(prevState => ({
+      [k]: v,
+    }));
+  }
 
   onToggle = (e, name) => {
     this.setState(prevState => ({
@@ -17,13 +29,13 @@ class PublicationExport extends React.Component {
     }));
   }
 
-  onCopyApa = () => {
+  updateReferences = (e) => {
     this.setState(prevState => ({
       references: [],
     }));
 
     var self = this;
-    const grabContent = p => fetch('https://dx.doi.org/' + encodeURIComponent(p.doi),{
+    const fetchReferences = p => fetch('https://dx.doi.org/' + encodeURIComponent(p.doi),{
       headers: {"Accept": "text/bibliography; style=apa; locale=fi-FI",}
     })
     .then(res => res.text())
@@ -34,12 +46,7 @@ class PublicationExport extends React.Component {
     ));
 
     Promise
-    .all(this.props.publications.map(grabContent))
-    .then(() =>
-      navigator.clipboard.writeText(self.state.references.sort().join("")).then(function() {
-        self.notify('Async: Copying to clipboard was successful!', 2000);
-      })
-    )
+    .all(this.props.publications.map(fetchReferences))
   }
 
   notify(msg,duration){
@@ -57,19 +64,59 @@ class PublicationExport extends React.Component {
     <h2>Article outlines</h2>
     <label name='table' onClick={(e) => this.onToggle(e, e.target.getAttribute('name'))}>Show articles<input type='checkbox' checked={this.state.table} disabled/></label>
     <label name='sources' onClick={(e) => this.onToggle(e, e.target.getAttribute('name'))}>Show publications<input type='checkbox' checked={this.state.sources} disabled/></label>
-    <button onClick={(e) => this.onCopyApa()}>copy apa</button>
-    <table style={{paddingLeft : '0', display : this.state.table ? 'table' : 'none'}}>
-      <thead><tr>
-        <th colSpan="4">Articles</th>
-      </tr></thead><tbody>
-      {this.props.publications.map((publication) => <tr
-        key={publication.id}>
-        <td>{publication.id}</td>
-        <td>{publication.title.trim()}</td>
-        <td>{publication.crossref['container-title'][0].trim()}</td>
-        <td><a target='_blank' href={'https://dx.doi.org/'+publication.doi.trim()}>{publication.doi.trim()}</a></td>
-        </tr>)}</tbody>
-    </table>
+    <div>
+      {(this.state.tableformat == 'table' ? (
+        <table style={{paddingLeft : '0', display : this.state.table ? 'table' : 'none'}}>
+          <thead><tr>
+            <th colSpan="4">
+              Articles&nbsp;
+              <button onClick={(e) => this.assignState('tableformat', 'apa')}>apa</button>
+            </th>
+          </tr></thead><tbody>
+          {this.props.publications.map((publication) => <tr
+            key={publication.id}>
+            <td>{publication.id}</td>
+            <td>{publication.title.trim()}</td>
+            <td>{publication.crossref['container-title'][0].trim()}</td>
+            <td><a target='_blank' href={'https://dx.doi.org/'+publication.doi.trim()}>{publication.doi.trim()}</a></td>
+            </tr>)}</tbody>
+        </table>
+      ):(
+        <table style={{paddingLeft : '0', display : this.state.table ? 'table' : 'none'}}>
+          <thead><tr>
+            <th>
+              Articles&nbsp;
+              <button onClick={(e) => this.assignState('tableformat', 'table')}>table</button>
+              {this.state.references.length === 0 ?
+                (<button onClick={(e) => this.updateReferences()}>
+                  update
+                </button>):
+                (<button onClick={(e) => {
+                  (typeof navigator.clipboard.writeText === "undefined" || !navigator.clipboard) ?
+                    (e) => (
+                        document.getElementById('apatextbody').focus()
+                        || document.getElementById('apatextbody').select()
+                        || document.execCommand('copy')
+                    )
+                  :
+                    navigator.clipboard.writeText(this.state.references.sort().join("")).then((self = this) => {
+                      self.notify('Async: Copying to clipboard was successful!', 2000);
+                    })}
+                }>
+                  copy
+                </button>)
+              }
+            </th>
+          </tr></thead><tbody><tr><td>
+          <textarea id='apatextbody' tabIndex="-1" readOnly rows="10" style={{width:'100%'}}
+          value={this.state.references.map((line,idx) => line).join("")}
+          />
+            </td></tr></tbody>
+        </table>
+      )
+    )}
+    </div>
+
     <table style={{paddingLeft : '0', display : this.state.sources ? 'table' : 'none'}}>
       <thead><tr>
         <th colSpan="1">Publications</th>
