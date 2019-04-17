@@ -82,7 +82,6 @@ export function updatePublication(id, done) {
 
 export function updatePublicationTitle(id, title) {
   return (dispatch) => {
-    debugger;
     db.table('publications')
       .update(id, { title })
       .then(() => {
@@ -96,7 +95,6 @@ export function updatePublicationTitle(id, title) {
 
 export function updatePublicationEdit(id, edit) {
   return (dispatch) => {
-    debugger;
     db.table('publications')
       .update(id, { edit })
       .then(() => {
@@ -176,7 +174,6 @@ export function deleteLabel(id) {
 
 export function updateLabel(id, title) {
   return (dispatch) => {
-    debugger;
     db.table('labels')
       .update(id, { title })
       .then(() => {
@@ -230,7 +227,6 @@ export function deleteQuote(id) {
 
 export function updateQuote(id, key, val) {
   return (dispatch) => {
-    debugger;
     db.table('quotes')
       .update(id, { [key]: val })
       .then(() => {
