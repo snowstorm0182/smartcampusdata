@@ -8,7 +8,7 @@ import PublicationList from './PublicationList';
 import PublicationExport from './PublicationExport';
 
 const PublicationApp = (
-    {publications, labels, quotes, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
+    {publications, labels, quotes, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationField, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
   ) => <div className="PublicationApp">
   <div className="PublicationApp-header">
     <h2>Publications <button onClick={(e) => handleVisibilityUpdatePublicationAdd({addPublication:!visibility.addPublication})}>Add form</button></h2>
@@ -19,6 +19,7 @@ const PublicationApp = (
     labels={labels}
     quotes={quotes}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
+    handleUpdatePublicationField={handleUpdatePublicationField}
     handleUpdatePublicationEdit={handleUpdatePublicationEdit}
     handleUpdatePublicationTags={handleUpdatePublicationTags}
     handleUpdatePublicationNotes={handleUpdatePublicationNotes}
@@ -30,6 +31,7 @@ const PublicationApp = (
     labels={labels}
     quotes={quotes}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
+    handleUpdatePublicationField={handleUpdatePublicationField}
     handleUpdatePublicationEdit={handleUpdatePublicationEdit}
     handleUpdatePublicationTags={handleUpdatePublicationTags}
     handleUpdatePublicationNotes={handleUpdatePublicationNotes}
@@ -41,6 +43,7 @@ const PublicationApp = (
 PublicationApp.propTypes = {
   publications: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
+    abstract: PropTypes.string,
     id: PropTypes.number.isRequired,
     tags: PropTypes.array,
     done: PropTypes.bool,
@@ -51,6 +54,7 @@ PublicationApp.propTypes = {
   visibility: PropTypes.object,
   handleVisibilityUpdatePublicationAdd: PropTypes.func.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,
+  handleUpdatePublicationField: PropTypes.func.isRequired,
   handleUpdatePublicationEdit: PropTypes.func.isRequired,
   handleUpdatePublicationTags: PropTypes.func.isRequired,
   handleUpdatePublicationNotes: PropTypes.func.isRequired,

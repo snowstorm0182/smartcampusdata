@@ -3,6 +3,7 @@ import {
   ADD_PUBLICATION,
   UPDATE_PUBLICATION,
   UPDATE_PUBLICATION_TITLE,
+  UPDATE_PUBLICATION_FIELD,
   UPDATE_PUBLICATION_EDIT,
   UPDATE_PUBLICATION_TAG,
   UPDATE_PUBLICATION_NOTES,
@@ -25,6 +26,13 @@ export default function publications(state = [], { type, payload }) {
       return [
         ...state.filter((publication) => publication.id !== payload.id),
         Object.assign({}, publicationToUpdate, { title: payload.title }),
+      ];
+    }
+    case UPDATE_PUBLICATION_FIELD: {
+      const publicationToUpdate = state.find((publication) => publication.id === payload.id);
+      return [
+        ...state.filter((publication) => publication.id !== payload.id),
+        Object.assign({}, publicationToUpdate, payload.field),
       ];
     }
     case UPDATE_PUBLICATION_EDIT: {

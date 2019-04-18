@@ -3,6 +3,7 @@ import {
   ADD_PUBLICATION,
   UPDATE_PUBLICATION,
   UPDATE_PUBLICATION_TITLE,
+  UPDATE_PUBLICATION_FIELD,
   UPDATE_PUBLICATION_EDIT,
   UPDATE_PUBLICATION_TAG,
   UPDATE_PUBLICATION_NOTES,
@@ -88,6 +89,19 @@ export function updatePublicationTitle(id, title) {
         dispatch({
           type: UPDATE_PUBLICATION_TITLE,
           payload: { id, title },
+        });
+      });
+  };
+}
+
+export function updatePublicationField(id, field) {
+  return (dispatch) => {
+    db.table('publications')
+      .update(id, field)
+      .then(() => {
+        dispatch({
+          type: UPDATE_PUBLICATION_FIELD,
+          payload: { id, field },
         });
       });
   };

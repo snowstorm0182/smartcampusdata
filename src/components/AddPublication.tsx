@@ -39,6 +39,9 @@ class AddPublication extends Component<any, any> {
       .then(result=>result.json())
       .then(items=>{
         this.setState({crossref: items.message});
+        if(items.message.abstract) {
+          this.setState({abstract: items.message.abstract});
+        }
         this.setState({title: items.message.title[0]});
       })
   }

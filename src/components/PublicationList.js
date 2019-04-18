@@ -3,13 +3,14 @@ import * as PropTypes from 'prop-types';
 
 import Publication from './Publication';
 
-const PublicationList = ({publications, labels, quotes, handleUpdatePublicationTitle, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) =>
+const PublicationList = ({publications, labels, quotes, handleUpdatePublicationTitle, handleUpdatePublicationField, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) =>
 <ul style={{paddingLeft : '0'}}>
   {publications.map((publication) => <Publication
     key={publication.id}
     {...publication}
     labels={labels}
     quotes={quotes}
+    handleUpdatePublicationField={handleUpdatePublicationField}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
     handleUpdatePublicationEdit={handleUpdatePublicationEdit}
     handleTogglePublication={handleTogglePublication}
@@ -22,6 +23,7 @@ const PublicationList = ({publications, labels, quotes, handleUpdatePublicationT
 PublicationList.propTypes = {
   publications: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
+    abstract: PropTypes.string,
     id: PropTypes.number.isRequired,
     crossref: PropTypes.object,
     tags: PropTypes.array,
@@ -30,6 +32,7 @@ PublicationList.propTypes = {
   })),
   labels: PropTypes.array.isRequired,
   quotes: PropTypes.array.isRequired,
+  handleUpdatePublicationField: PropTypes.func.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,
   handleUpdatePublicationEdit: PropTypes.func.isRequired,
   handleUpdatePublicationTags: PropTypes.func.isRequired,

@@ -14,6 +14,7 @@ class Publication extends React.Component
 
     state = {
       showquotes:  false,
+      showabstract:  false,
     }
 
     handleToggleNameEdit(toggle) {
@@ -61,11 +62,24 @@ class Publication extends React.Component
           color : this.state.showquotes ? 'green':'black',
           display : this.props.quotes.filter((i) => (i.publicationId == this.props.id)).length ? 'inline-block': 'none'
         }}>Show quotes {this.props.quotes.filter((i) => (i.publicationId == this.props.id)).length}</button>&nbsp;
+        <button name={'showabstract'}
+          onClick={(e) => this.onToggle(e, 'showabstract')}
+          style={{
+            color : this.state.showabstract ? 'green':'black',
+            display : this.props.abstract ? 'inline-block': 'none'
+          }}>Show abstract</button>&nbsp;
       {"id:" + this.props.id + ", "}
       {
       "notes:" + (this.props.notes ? this.props.notes.length : '0') + ", " + this.props.labels.filter((i) => (this.props.tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
       this.props.crossref['author'][0]['family'] + " - " + this.props.crossref['container-title'][0]
     }</p>
+    {(this.state.showabstract ? (
+      <p
+      style={{
+        textAlign: 'left'
+      }}
+      ><strong>Abstract:</strong>{this.props.abstract}</p>
+    ):null)}
     {(this.state.showquotes ? (
     <div className="quotes__item--publication">{(
       this.props.quotes.filter((i) => (i.publicationId == this.props.id)).map((i) => (
@@ -85,6 +99,12 @@ class Publication extends React.Component
       type="text"
       value={this.props.title}
       onChange={(e) => this.props.handleUpdatePublicationTitle(this.props.id, e.target.value)}
+    />
+    <input
+      name="title"
+      type="text"
+      value={this.props.abstract}
+      onChange={(e) => this.props.handleUpdatePublicationField(this.props.id, { abstract: e.target.value })}
     />
     <input
       name="done"
