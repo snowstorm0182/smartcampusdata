@@ -34,6 +34,10 @@ class AddPublication extends Component<any, any> {
     this._handleCrossCite(this.state.doi)
   }
 
+  doiGroupImport () {
+    this._handleGroupCrossRef(this.state.doi);
+  }
+
   _handleCrossRef(doi){
     fetch('https://api.crossref.org/works/'+doi)
       .then(result=>result.json())
@@ -43,6 +47,29 @@ class AddPublication extends Component<any, any> {
           this.setState({abstract: items.message.abstract});
         }
         this.setState({title: items.message.title[0]});
+      })
+  }
+
+  _handleGroupCrossRef(filter){
+    fetch('https://api.crossref.org/works/?filter='+filter+'&sort=published&order=asc&rows=100')
+      .then(result=>result.json())
+      .then(data=>{
+
+       const saveItem = d => this.props.handleAddPublication(
+         {title: d.title[0],
+           code: '',
+           doi: d.DOI,
+           bibtex: '',
+           crossref:d,
+           state:'imported'
+         }
+       );
+
+        Promise
+        .all(data.message.items
+          .filter((i) => (typeof i['author'] !== 'undefined'))
+          .map(saveItem))
+
       })
   }
 
@@ -64,10 +91,12 @@ class AddPublication extends Component<any, any> {
       <input name="title" type="text" value={this.state.title} onChange={(e) => this.handleChangeEvent(e)} /></label>
       <label>Code:
       <input name="code" type="text" value={this.state.code} onChange={(e) => this.handleChangeEvent(e)} /></label>
-      <label>Doi:
+      <label>Doi/filter:
       <input name="doi" type="text" value={this.state.doi} onChange={(e) => this.handleChangeEvent(e)} /></label>
       <button type="button" onClick={(e) => this.addPublication()}>Add Publication</button>
       <button type="button" onClick={(e) => this.doiImport()}>Import from Doi</button>
+      <button type="button" onClick={(e) => this.doiGroupImport()}
+      title="eg isbn:val or issn:val">Import filter</button>
     </div>);
   }
 }

@@ -14,7 +14,8 @@ class PublicationExport extends React.Component {
     tableformat: 'table',
     sources:false,
     citations: false,
-    references: []
+    references: [],
+    showStates: [],
   };
 
   assignState = (k, v) => {

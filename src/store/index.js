@@ -9,7 +9,6 @@ const initialState = {
   quotes: [],
   //live only
   visibility: {addPublication:false},
-  //filters: [],
 };
 
 const store = createStore(

@@ -65,6 +65,24 @@ function importQuotesFunc(data) {
 }
 
 class App extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.handleFilterChange = this.handleFilterChange.bind(this);
+    this.state = {filters: ['imported','exluded']}
+  }
+  filters = ['imported', 'exluded']
+  handleFilterChange(k) {
+    var tmpfilters = [...this.state.filters];
+    var index = tmpfilters.indexOf(k);
+    if (index === -1) {
+        tmpfilters.push(k);
+    } else {
+        tmpfilters.splice(index, 1);
+    }
+    this.setState({filters: tmpfilters});
+  }
+
   _import(data) {
     importFunc(data);
   }
@@ -82,8 +100,15 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Publications review App</h1>
         </header>
+        <div>
+          {this.filters.map((i) => (<button
+            style={{
+              color : this.state.filters.includes(i) ? 'gray':'black',
+            }}
+            key={i} onClick={(e) => this.handleFilterChange(i)}>{i}</button>))}
+        </div>
         <Provider store={store}>
-          <PublicationApp />
+          <PublicationApp filters={this.state.filters} />
           <LabelApp />
           <QuoteApp />
         </Provider>

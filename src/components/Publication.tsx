@@ -68,6 +68,11 @@ class Publication extends React.Component
             color : this.state.showabstract ? 'green':'black',
             display : this.props.abstract ? 'inline-block': 'none'
           }}>Show abstract</button>&nbsp;
+        <button name={'exclude'}
+          onClick={(e) => this.props.handleUpdatePublicationField(this.props.id, {state:'exluded'})}
+          style={{
+            color : this.props.state === 'exluded' ? 'gray':'black',
+          }}>exclude</button>&nbsp;
       {"id:" + this.props.id + ", "}
       {
       "notes:" + (this.props.notes ? this.props.notes.length : '0') + ", " + this.props.labels.filter((i) => (this.props.tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
