@@ -69,7 +69,13 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.handleFilterChange = this.handleFilterChange.bind(this);
-    this.state = {filters: ['imported','exluded']}
+    this.state = {
+      filters: ['imported','exluded'],
+      showpublications: false,
+      showlabels: false,
+      showquotes: false,
+      showtools: false,
+    }
   }
   filters = FILTERS
   handleFilterChange(k) {
@@ -100,7 +106,29 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Publications review App</h1>
         </header>
-        <div>
+        <div style={{transform: 'translateY(-2em)',color: 'white',height: '0',}}>
+          views:<button
+            style={{
+              color : !this.state.showpublications ? 'gray':'black',
+            }}
+            key='showpublications' onClick={(e) => this.setState({showpublications: !this.state.showpublications})}>publications</button>
+          <button
+            style={{
+              color : !this.state.showlabels ? 'gray':'black',
+            }}
+            key='showlabels' onClick={(e) => this.setState({showlabels: !this.state.showlabels})}>labels</button>
+          <button
+            style={{
+              color : !this.state.showquotes ? 'gray':'black',
+            }}
+            key='showquotes' onClick={(e) => this.setState({showquotes: !this.state.showquotes})}>quotes</button>
+          <button
+            style={{
+              color : !this.state.showtools ? 'gray':'black',
+            }}
+            key='showtools' onClick={(e) => this.setState({showtools: !this.state.showtools})}>tools</button>
+          &nbsp;
+          expose:
           {this.filters.filter((i) => (i !== '')).map((i) => (<button
             style={{
               color : this.state.filters.includes(i) ? 'gray':'black',
@@ -108,20 +136,21 @@ class App extends React.Component {
             key={i} onClick={(e) => this.handleFilterChange(i)}>{i}</button>))}
         </div>
         <Provider store={store}>
-          <PublicationApp filters={this.state.filters} />
-          <LabelApp />
-          <QuoteApp />
+          {this.state.showpublications ? (<PublicationApp filters={this.state.filters} />):null}
+          {this.state.showlabels ? (<LabelApp />):null}
+          {this.state.showquotes ? (<QuoteApp />):null}
         </Provider>
-        <div style={{display : 'none'}}>
-          <Hello name="TypeScript" enthusiasmLevel={10} />
-        </div>
-        <label>Import/export </label>
-        <textarea onChange={(e) => this._import(e.target.value)} />
-        <button onClick={(e) => this._export()}>Export</button>
-        <div>
-          <label>Import quotes</label>
-          <textarea onChange={(e) => this._import_quotes(e.target.value)} />
-        </div>
+        {this.state.showtools ? (
+          <div style={{margin:'1em'}}>
+            <label>Import/export </label>
+            <textarea onChange={(e) => this._import(e.target.value)} />
+            <button onClick={(e) => this._export()}>Export</button>
+            <div>
+              <label>Import quotes</label>
+              <textarea onChange={(e) => this._import_quotes(e.target.value)} />
+            </div>
+          </div>
+        ):null}
       </div>
     );
   }

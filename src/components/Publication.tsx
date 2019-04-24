@@ -67,7 +67,10 @@ class Publication extends React.Component
         overflow: 'hidden',
         backgroundColor:'#e4f0f5',
         padding: '.5em .5em 1em',
-      }:{overflow: 'hidden',padding: '.5em .5em 1em',}
+      }:(
+        this.props.state === 'exluded' ? {
+          backgroundColor:'#f8e1e1'
+        }:{overflow: 'hidden',padding: '.5em .5em 1em',})
     )}>
     <h3><span onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
       style={{
