@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {FILTERS, WEIGHTS} from '../constants';
+import {STATES, WEIGHTS} from '../constants';
 
 class Publication extends React.Component
   <any, any>
@@ -55,7 +55,20 @@ class Publication extends React.Component
       }));
     }
 
-    render = () => {return (<li>
+    render = () => {return (<li
+    style={this.props.state === 'focus' ? {
+      overflow: 'hidden',
+      outlineOffset: '-.5em',
+      padding: '.5em .5em 1em',
+      outline: '3px dashed blue',
+      backgroundColor:'#ffd955',
+    }:(
+      this.props.state === 'processed' ? {
+        overflow: 'hidden',
+        backgroundColor:'#e4f0f5',
+        padding: '.5em .5em 1em',
+      }:{overflow: 'hidden',padding: '.5em .5em 1em',}
+    )}>
     <h3><span onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
       style={{
         textDecoration : this.props.state === 'exluded' ? 'line-through':'none',
@@ -78,7 +91,7 @@ class Publication extends React.Component
           name="state"
           defaultValue={this.props.state}
           onChange={(e) =>  this.props.handleUpdatePublicationField(this.props.id, {state: e.target.value})}> // [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
-          {FILTERS.map((i) => (<option key={i} value={i}>{i}</option>))}
+          {STATES.map((i) => (<option key={i} value={i}>{i}</option>))}
         </select>&nbsp;
         <select
           name="weight"

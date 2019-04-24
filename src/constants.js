@@ -17,4 +17,5 @@ export const DELETE_QUOTE = 'DELETE_QUOTE';
 export const LOAD_QUOTES = 'LOAD_QUOTES';
 export const LOAD_ALL = 'LOAD_ALL';
 export const FILTERS = ['','imported','exluded'];
+export const STATES = ['','imported','exluded','focus','processed'];
 export const WEIGHTS = ['','3','2','1','0','-1'];
