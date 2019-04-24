@@ -11,7 +11,6 @@ export default function quotes(state = [], { type, payload }) {
     case LOAD_QUOTES: return payload;
     case ADD_QUOTE: return [...state, payload];
     case UPDATE_QUOTE: {
-      debugger;
       const quoteToUpdate = state.find((quote) => quote.id === payload.id);
       return [
         ...state.map(q => {

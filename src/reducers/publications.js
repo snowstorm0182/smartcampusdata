@@ -22,38 +22,53 @@ export default function publications(state = [], { type, payload }) {
       ];
     }
     case UPDATE_PUBLICATION_TITLE: {
-      const publicationToUpdate = state.find((publication) => publication.id === payload.id);
+      const iOrg = state.find((publication) => publication.id === payload.id);
       return [
-        ...state.filter((publication) => publication.id !== payload.id),
-        Object.assign({}, publicationToUpdate, { title: payload.title }),
+        ...state.map(i => {
+          if(i.id == payload.id)
+            return Object.assign({}, iOrg, { title: payload.title });
+          return i;
+        })
       ];
     }
     case UPDATE_PUBLICATION_FIELD: {
-      const publicationToUpdate = state.find((publication) => publication.id === payload.id);
+      const iOrg = state.find((publication) => publication.id === payload.id);
       return [
-        ...state.filter((publication) => publication.id !== payload.id),
-        Object.assign({}, publicationToUpdate, payload.field),
+        ...state.map(i => {
+          if(i.id == payload.id)
+            return Object.assign({}, iOrg, payload.field);
+          return i;
+        })
       ];
     }
     case UPDATE_PUBLICATION_EDIT: {
-      const publicationToUpdate = state.find((publication) => publication.id === payload.id);
+      const iOrg = state.find((publication) => publication.id === payload.id);
       return [
-        ...state.filter((publication) => publication.id !== payload.id),
-        Object.assign({}, publicationToUpdate, { edit: payload.edit }),
+        ...state.map(i => {
+          if(i.id == payload.id)
+            return Object.assign({}, iOrg, { edit: payload.edit });
+          return i;
+        })
       ];
     }
     case UPDATE_PUBLICATION_TAG: {
-      const publicationToUpdate = state.find((publication) => publication.id === payload.id);
+      const iOrg = state.find((publication) => publication.id === payload.id);
       return [
-        ...state.filter((publication) => publication.id !== payload.id),
-        Object.assign({}, publicationToUpdate, { tags: payload.tags }),
+        ...state.map(i => {
+          if(i.id == payload.id)
+            return Object.assign({}, iOrg, { tags: payload.tags });
+          return i;
+        })
       ];
     }
     case UPDATE_PUBLICATION_NOTES: {
-      const publicationToUpdate = state.find((publication) => publication.id === payload.id);
+      const iOrg = state.find((publication) => publication.id === payload.id);
       return [
-        ...state.filter((publication) => publication.id !== payload.id),
-        Object.assign({}, publicationToUpdate, { notes: payload.notes }),
+        ...state.map(i => {
+          if(i.id == payload.id)
+            return Object.assign({}, iOrg, { notes: payload.notes });
+          return i;
+        })
       ];
     }
     case DELETE_PUBLICATION: return state.filter((publication) => publication.id !== payload);
