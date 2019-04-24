@@ -56,11 +56,11 @@ class Publication extends React.Component
     }
 
     render = () => {return (<li>
-    <h3 onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
+    <h3><span onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
       style={{
         textDecoration : this.props.state === 'exluded' ? 'line-through':'none',
       }}
-    >{this.props.title}</h3>
+    >{this.props.title}</span><a target='_blank' href={'https://dx.doi.org/'+this.props.doi.trim()}>&#11016;</a></h3>
     <p style={{marginTop : '-1em'}}>
       <button name={'showquotes'}
         onClick={(e) => this.onToggle(e, 'showquotes')}
@@ -96,7 +96,7 @@ class Publication extends React.Component
       style={{
         textAlign: 'left'
       }}
-      ><strong>Abstract:</strong>{this.props.abstract}</p>
+      ><strong>Abstract: </strong>{this.props.abstract}</p>
     ):null)}
     {(this.state.showquotes ? (
     <div className="quotes__item--publication">{(
