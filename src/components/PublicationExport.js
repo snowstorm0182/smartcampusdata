@@ -40,18 +40,34 @@ class PublicationExport extends React.Component {
     }));
 
     var self = this;
+
+    this.filteredPublications()
+    .filter((i) => (i.apa))
+    .map((i) => (
+      self.setState(prevState => ({
+        references: [...prevState.references, i.apa],
+      }))
+    ));
+
     const fetchReferences = p => fetch('https://dx.doi.org/' + encodeURIComponent(p.doi),{
       headers: {"Accept": "text/bibliography; style=apa; locale=fi-FI",}
     })
     .then(res => res.text())
-    .then(ref => (
+    .then(ref => (p.apa = ref))
+    .then(() => (
      self.setState(prevState => ({
-       references: [...prevState.references, ref],
+       references: [...prevState.references, p.apa],
      }))
-    ));
+    )).then(() => {
+      this.props.handleUpdatePublicationField(p.id, {apa: p.apa})
+    });
 
     Promise
-    .all(this.filteredPublications().map(fetchReferences))
+    .all(
+      this.filteredPublications()
+      .filter((i) => (!i.apa))
+      .map(fetchReferences)
+    )
   }
 
   notify(msg,duration){
