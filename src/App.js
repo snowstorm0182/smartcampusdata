@@ -99,6 +99,20 @@ class App extends React.Component {
     exportFunc(data);
   }
 
+  fileReader = null;
+
+  handleFileRead = (e) => {
+      const content = this.fileReader.result;
+      this._import(content);
+      //console.log(content);
+      // … do something with the 'content' …
+  }
+  handleFileChosen = (file) => {
+      this.fileReader = new FileReader();
+      this.fileReader.onloadend = this.handleFileRead;
+      this.fileReader.readAsText(file);
+  }
+
   render() {
     return (
       <div className="App" style={{marginBottom : '1em'}}>
@@ -143,6 +157,12 @@ class App extends React.Component {
         {this.state.showtools ? (
           <div style={{margin:'1em'}}>
             <label>Import/export </label>
+            <input type='file'
+                   id='file'
+                   className='input-file'
+                   accept='.json'
+                   onChange={e => this.handleFileChosen(e.target.files[0])}
+            />
             <textarea onChange={(e) => this._import(e.target.value)} />
             <button onClick={(e) => this._export()}>Export</button>
             <div>

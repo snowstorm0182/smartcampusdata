@@ -281,9 +281,11 @@ export function exportDbData(db: Dexie): TableDump[] {
 export function importDbData(data: TableDump[], db: Dexie) {
     return db.transaction('rw', db.tables, () => {
         return Promise.all(data.map (t =>
-            db.table(t.table).clear()
-              .then(()=>db.table(t.table).bulkAdd(t.rows))))
-              .then(window.location.reload(false));
+              db.table(t.table).clear()
+              .then(()=>db.table(t.table).bulkAdd(t.rows))
+            )
+        )
+        .then(setTimeout(()=>{window.location.reload(false)},4000));
     });
 }
 
