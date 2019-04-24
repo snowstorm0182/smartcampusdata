@@ -28,6 +28,7 @@ const PublicationApp = (
     handleDeletePublication={handleDeletePublication}
   />
   <PublicationExport
+    filters={filters}
     publications={publications}
     labels={labels}
     quotes={quotes}

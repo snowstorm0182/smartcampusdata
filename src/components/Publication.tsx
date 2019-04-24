@@ -1,5 +1,7 @@
 import * as React from 'react';
 
+import {FILTERS, WEIGHTS} from '../constants';
+
 class Publication extends React.Component
   <any, any>
   {
@@ -54,7 +56,11 @@ class Publication extends React.Component
     }
 
     render = () => {return (<li>
-    <h3 onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}>{this.props.title}</h3>
+    <h3 onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
+      style={{
+        textDecoration : this.props.state === 'exluded' ? 'line-through':'none',
+      }}
+    >{this.props.title}</h3>
     <p style={{marginTop : '-1em'}}>
       <button name={'showquotes'}
         onClick={(e) => this.onToggle(e, 'showquotes')}
@@ -68,11 +74,18 @@ class Publication extends React.Component
             color : this.state.showabstract ? 'green':'black',
             display : this.props.abstract ? 'inline-block': 'none'
           }}>Show abstract</button>&nbsp;
-        <button name={'exclude'}
-          onClick={(e) => this.props.handleUpdatePublicationField(this.props.id, {state:'exluded'})}
-          style={{
-            color : this.props.state === 'exluded' ? 'gray':'black',
-          }}>exclude</button>&nbsp;
+        <select
+          name="state"
+          defaultValue={this.props.state}
+          onChange={(e) =>  this.props.handleUpdatePublicationField(this.props.id, {state: e.target.value})}> // [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
+          {FILTERS.map((i) => (<option key={i} value={i}>{i}</option>))}
+        </select>&nbsp;
+        <select
+          name="weight"
+          defaultValue={this.props.weight}
+          onChange={(e) =>  this.props.handleUpdatePublicationField(this.props.id, {weight: e.target.value})}> // [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
+          {WEIGHTS.map((i) => (<option key={i} value={i}>{i}</option>))}
+        </select>&nbsp;
       {"id:" + this.props.id + ", "}
       {
       "notes:" + (this.props.notes ? this.props.notes.length : '0') + ", " + this.props.labels.filter((i) => (this.props.tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +

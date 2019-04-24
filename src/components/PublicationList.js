@@ -8,6 +8,7 @@ const PublicationList = ({filters, publications, labels, quotes, handleUpdatePub
   {publications
     .filter((i) => (!filters.includes(i.state)))
     .map((publication) => <Publication
+    filters={filters}
     key={publication.id}
     {...publication}
     labels={labels}

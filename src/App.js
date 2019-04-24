@@ -8,7 +8,7 @@ import PublicationApp from './containers/PublicationApp';
 
 import {loadPublications} from './actions';
 import store from './store';
-import {LOAD_PUBLICATIONS} from './constants';
+import {LOAD_PUBLICATIONS, FILTERS} from './constants';
 
 store.dispatch(loadPublications(LOAD_PUBLICATIONS));
 
@@ -71,7 +71,7 @@ class App extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.state = {filters: ['imported','exluded']}
   }
-  filters = ['imported', 'exluded']
+  filters = FILTERS
   handleFilterChange(k) {
     var tmpfilters = [...this.state.filters];
     var index = tmpfilters.indexOf(k);
@@ -101,7 +101,7 @@ class App extends React.Component {
           <h1 className="App-title">Publications review App</h1>
         </header>
         <div>
-          {this.filters.map((i) => (<button
+          {this.filters.filter((i) => (i !== '')).map((i) => (<button
             style={{
               color : this.state.filters.includes(i) ? 'gray':'black',
             }}

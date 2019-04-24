@@ -18,6 +18,10 @@ class PublicationExport extends React.Component {
     showStates: [],
   };
 
+  filteredPublications = () => {
+    return this.props.publications.filter((i) => (!this.props.filters.includes(i.state)))
+  }
+
   assignState = (k, v) => {
     this.setState(prevState => ({
       [k]: v,
@@ -47,7 +51,7 @@ class PublicationExport extends React.Component {
     ));
 
     Promise
-    .all(this.props.publications.map(fetchReferences))
+    .all(this.filteredPublications().map(fetchReferences))
   }
 
   notify(msg,duration){
@@ -74,7 +78,7 @@ class PublicationExport extends React.Component {
               <button onClick={(e) => this.assignState('tableformat', 'apa')}>apa</button>
             </th>
           </tr></thead><tbody>
-          {this.props.publications.map((publication) => <tr
+          {this.filteredPublications().map((publication) => <tr
             key={publication.id}>
             <td>{publication.id}</td>
             <td>{publication.title.trim()}</td>
@@ -123,7 +127,7 @@ class PublicationExport extends React.Component {
         <th colSpan="1">Publications</th>
       </tr></thead><tbody>
       {
-        [...new Set(this.props.publications.map(item => item.crossref['container-title'][0]))]
+        [...new Set(this.filteredPublications().map(item => item.crossref['container-title'][0]))]
         .map((publication) => <tr
         key={publication}>
         <td>{publication}</td>
