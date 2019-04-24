@@ -6,6 +6,7 @@ import bibtexParse from 'bibtex-parse-js';
 
 class AddPublication extends Component<any, any> {
     static propTypes = {
+      publications: PropTypes.array.isRequired,
       handleAddPublication: PropTypes.func.isRequired,
     };
 
@@ -51,6 +52,7 @@ class AddPublication extends Component<any, any> {
   }
 
   _handleGroupCrossRef(filter){
+    //var self = this;
     fetch('https://api.crossref.org/works/?filter='+filter+'&sort=published&order=desc&rows=100')
       .then(result=>result.json())
       .then(data=>{
@@ -68,6 +70,9 @@ class AddPublication extends Component<any, any> {
         Promise
         .all(data.message.items
           .filter((i) => (typeof i['author'] !== 'undefined'))
+          .filter((i) => (
+            !this.props.publications.find(x => x.doi === i.DOI)
+          ))
           .map(saveItem))
 
       })

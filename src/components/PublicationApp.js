@@ -13,7 +13,11 @@ const PublicationApp = (
   <div className="PublicationApp-header">
     <h2>Publications <button onClick={(e) => handleVisibilityUpdatePublicationAdd({addPublication:!visibility.addPublication})}>Add form</button></h2>
   </div>
-  {visibility.addPublication && (<AddPublication handleAddPublication={handleAddPublication} />)}
+  {visibility.addPublication ? (
+    <AddPublication
+    publications={publications}
+    handleAddPublication={handleAddPublication} />
+  ):null}
   <PublicationList
     filters={filters}
     publications={publications}
