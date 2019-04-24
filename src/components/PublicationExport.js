@@ -16,6 +16,7 @@ class PublicationExport extends React.Component {
     citations: false,
     references: [],
     showStates: [],
+    apaset: 0,
   };
 
   filteredPublications = () => {
@@ -66,6 +67,7 @@ class PublicationExport extends React.Component {
     .all(
       this.filteredPublications()
       .filter((i) => (!i.apa))
+      .slice(0,50) // crossref limit
       .map(fetchReferences)
     )
   }
@@ -108,11 +110,11 @@ class PublicationExport extends React.Component {
             <th>
               Articles&nbsp;
               <button onClick={(e) => this.assignState('tableformat', 'table')}>table</button>
-              {this.state.references.length === 0 ?
+              {this.state.references.length !== this.filteredPublications().length ?
                 (<button onClick={(e) => this.updateReferences()}>
-                  update
-                </button>):
-                (<button onClick={(e) => {
+                  update { this.state.references.length + '/' + this.filteredPublications().length }
+                </button>):null}
+              {(<button onClick={(e) => {
                   (typeof navigator.clipboard.writeText === "undefined" || !navigator.clipboard) ?
                     (e) => (
                         document.getElementById('apatextbody').focus()
@@ -125,8 +127,7 @@ class PublicationExport extends React.Component {
                     })}
                 }>
                   copy
-                </button>)
-              }
+                </button>)}
             </th>
           </tr></thead><tbody><tr><td>
           <textarea id='apatextbody' tabIndex="-1" readOnly rows="10" style={{width:'100%'}}

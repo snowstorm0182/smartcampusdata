@@ -51,7 +51,7 @@ class AddPublication extends Component<any, any> {
   }
 
   _handleGroupCrossRef(filter){
-    fetch('https://api.crossref.org/works/?filter='+filter+'&sort=published&order=asc&rows=100')
+    fetch('https://api.crossref.org/works/?filter='+filter+'&sort=published&order=desc&rows=100')
       .then(result=>result.json())
       .then(data=>{
 
