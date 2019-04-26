@@ -1,6 +1,8 @@
 import * as React from 'react';
 
 import {STATES, WEIGHTS} from '../constants';
+import {appendQuotes} from '../actions';
+import db from '../db';
 
 class Publication extends React.Component
   <any, any>
@@ -54,6 +56,25 @@ class Publication extends React.Component
         [name]: !prevState[name],
       }));
     }
+
+    fileReader = new FileReader()
+    handleQuoteFileRead = (e) => {
+        const content = this.fileReader.result;
+        if(typeof content !== 'string'){
+          return;
+        }
+        (async ()=>{
+          const dataToImport = JSON.parse(content);
+          dataToImport.id = this.props.id
+          await appendQuotes(dataToImport, db);
+        })();
+    }
+    handleQuoteFileChosen = (file) => {
+        this.fileReader = new FileReader();
+        this.fileReader.onloadend = this.handleQuoteFileRead;
+        this.fileReader.readAsText(file);
+    }
+
 
     render = () => {return (<li
     style={this.props.state === 'focus' ? {
@@ -148,6 +169,12 @@ class Publication extends React.Component
     />
     <div>
       <button type="button" onClick={() =>  this._handleCrossRef()}>Check Citation(1_sec_lim)</button>
+      <input type='file'
+             id='file'
+             className='input-file'
+             accept='.json'
+             onChange={(e) => this.handleQuoteFileChosen(e.target.files![0])}
+      />
     </div>
     <div><h4>Notes:</h4>
     {this.props.notes.map((i, idx) => (
