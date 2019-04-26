@@ -12,7 +12,16 @@ class AddPublication extends Component<any, any> {
 
   constructor(props: any) {
     super(props);
-    this.state = {title: '', code:'', doi:'', bibtex:'', crossref:{}};
+    this.state = {
+      title: '',
+      code:'',
+      doi:'',
+      arxiv: '',
+      bibtex:'',
+      crossref:{},
+      semanticscholar:{},
+      state: '',
+    };
     this.addPublication = this.addPublication.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -40,15 +49,25 @@ class AddPublication extends Component<any, any> {
   }
 
   _handleCrossRef(doi){
-    fetch('https://api.crossref.org/works/'+doi)
-      .then(result=>result.json())
-      .then(items=>{
-        this.setState({crossref: items.message});
-        if(items.message.abstract) {
-          this.setState({abstract: items.message.abstract});
-        }
-        this.setState({title: items.message.title[0]});
-      })
+    if(doi.toLowerCase().indexOf('arxiv:') !== -1){
+      fetch('https://api.semanticscholar.org/v1/paper/'+doi)
+        .then(result=>result.json())
+        .then(item=>{
+          this.setState({arxiv: item.arxivId});
+          this.setState({semanticscholar: item});
+          this.setState({title: item.title});
+        })
+    } else {
+      fetch('https://api.crossref.org/works/'+doi)
+        .then(result=>result.json())
+        .then(items=>{
+          this.setState({crossref: items.message});
+          if(items.message.abstract) {
+            this.setState({abstract: items.message.abstract});
+          }
+          this.setState({title: items.message.title[0]});
+        })
+    }
   }
 
   _handleGroupCrossRef(filter){
@@ -79,15 +98,15 @@ class AddPublication extends Component<any, any> {
   }
 
   _handleCrossCite(doi){
-    fetch('https://www.crosscite.org/format?doi=/' + encodeURIComponent(doi) + '&style=bibtex&lang=en-US')
-      .then(result=>result.text())
-      .then(text=>{
-        //console.log(text);
-        this.setState({bibtex: text});
-        let parsedbib = bibtexParse.toJSON(text);
-        this.setState({code: parsedbib[0]['citationKey']});
-        //console.log(parsedbib);
-      })
+    if(doi.toLowerCase().indexOf('arxiv:') === -1){
+      fetch('https://www.crosscite.org/format?doi=/' + encodeURIComponent(doi) + '&style=bibtex&lang=en-US')
+        .then(result=>result.text())
+        .then(text=>{
+          this.setState({bibtex: text});
+          let parsedbib = bibtexParse.toJSON(text);
+          this.setState({code: parsedbib[0]['citationKey']});
+        })
+    }
   }
 
   render() {

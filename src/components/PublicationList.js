@@ -30,6 +30,7 @@ PublicationList.propTypes = {
     abstract: PropTypes.string,
     id: PropTypes.number.isRequired,
     crossref: PropTypes.object,
+    semanticscholar: PropTypes.object,
     tags: PropTypes.array,
     done: PropTypes.bool,
     edit: PropTypes.bool,

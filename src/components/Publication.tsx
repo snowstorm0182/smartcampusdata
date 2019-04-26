@@ -14,11 +14,23 @@ class Publication extends React.Component
 
     constructor(props) {
       super(props);
+      this.state.author = Object.keys(this.props.crossref).length !== 0 ?
+        this.props.crossref['author'][0]['family']:
+        this.props.semanticscholar.authors[0].name;
+      this.state.forum = Object.keys(this.props.crossref).length !== 0 ?
+        this.props.crossref['container-title'][0]:
+        'preprint'
     }
 
     state = {
       showquotes:  false,
       showabstract:  false,
+      author: '',
+      forum: '',
+    }
+
+    link(){
+      return this.props.arxiv ? 'https://arxiv.org/abs/'+this.props.arxiv.trim() : 'https://dx.doi.org/'+this.props.doi.trim();
     }
 
     handleToggleNameEdit(toggle) {
@@ -97,7 +109,7 @@ class Publication extends React.Component
       style={{
         textDecoration : this.props.state === 'exluded' ? 'line-through':'none',
       }}
-    >{this.props.title}</span><a target='_blank' href={'https://dx.doi.org/'+this.props.doi.trim()}>&#11016;</a></h3>
+    >{this.props.title}</span><a target='_blank' href={this.link()}>&#11016;</a></h3>
     <p style={{marginTop : '-1em'}}>
       <button name={'showquotes'}
         onClick={(e) => this.onToggle(e, 'showquotes')}
@@ -126,7 +138,7 @@ class Publication extends React.Component
       {"id:" + this.props.id + ", "}
       {
       "notes:" + (this.props.notes ? this.props.notes.length : '0') + ", " + this.props.labels.filter((i) => (this.props.tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
-      this.props.crossref['author'][0]['family'] + " - " + this.props.crossref['container-title'][0]
+      this.state.author + " - " + this.state.forum
     }</p>
     {(this.state.showabstract ? (
       <p

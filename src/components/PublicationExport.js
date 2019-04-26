@@ -20,7 +20,9 @@ class PublicationExport extends React.Component {
   };
 
   filteredPublications = () => {
-    return this.props.publications.filter((i) => (!this.props.filters.includes(i.state)))
+    return this.props.publications
+    .filter((i) => (!i.arxiv))
+    .filter((i) => (!this.props.filters.includes(i.state)))
   }
 
   assignState = (k, v) => {
