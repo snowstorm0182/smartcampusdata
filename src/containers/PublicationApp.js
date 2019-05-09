@@ -15,12 +15,13 @@ import {
 } from '../actions';
 
 function mapStateToProps(state) {
-  const { publications, labels, quotes, visibility } = state;
+  const { publications, labels, quotes, visibility, forums } = state;
   return {
     publications,
     labels,
     quotes,
-    visibility
+    visibility,
+    forums,
   };
 }
 

@@ -8,7 +8,7 @@ import PublicationList from './PublicationList';
 import PublicationExport from './PublicationExport';
 
 const PublicationApp = (
-    {filters, publications, labels, quotes, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationField, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
+    {filters, publications, labels, quotes, forums, visibility, handleVisibilityUpdatePublicationAdd, handleUpdatePublicationTitle, handleUpdatePublicationField, handleUpdatePublicationEdit, handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleUpdatePublication, handleDeletePublication, handleAddPublication}
   ) => <div className="PublicationApp">
   <div className="PublicationApp-header">
     <h2>Publications <button onClick={(e) => handleVisibilityUpdatePublicationAdd({addPublication:!visibility.addPublication})}>Add form</button></h2>
@@ -23,6 +23,7 @@ const PublicationApp = (
     publications={publications}
     labels={labels}
     quotes={quotes}
+    forums={forums}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
     handleUpdatePublicationField={handleUpdatePublicationField}
     handleUpdatePublicationEdit={handleUpdatePublicationEdit}
@@ -58,6 +59,7 @@ PublicationApp.propTypes = {
   })),
   labels: PropTypes.array,
   quotes: PropTypes.array,
+  forums: PropTypes.array,
   visibility: PropTypes.object,
   handleVisibilityUpdatePublicationAdd: PropTypes.func.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,

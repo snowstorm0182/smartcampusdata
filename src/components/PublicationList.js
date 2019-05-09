@@ -3,7 +3,7 @@ import * as PropTypes from 'prop-types';
 
 import Publication from './Publication';
 
-const PublicationList = ({filters, publications, labels, quotes, handleUpdatePublicationTitle, handleUpdatePublicationField, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) =>
+const PublicationList = ({filters, publications, labels, quotes, forums, handleUpdatePublicationTitle, handleUpdatePublicationField, handleUpdatePublicationEdit,  handleUpdatePublicationTags,  handleUpdatePublicationNotes, handleTogglePublication, handleDeletePublication}) =>
 <ul style={{paddingLeft : '0'}}>
   {publications
     .filter((i) => (!filters.includes(i.state)))
@@ -13,6 +13,7 @@ const PublicationList = ({filters, publications, labels, quotes, handleUpdatePub
     {...publication}
     labels={labels}
     quotes={quotes}
+    forums={forums}
     handleUpdatePublicationField={handleUpdatePublicationField}
     handleUpdatePublicationTitle={handleUpdatePublicationTitle}
     handleUpdatePublicationEdit={handleUpdatePublicationEdit}
@@ -37,6 +38,7 @@ PublicationList.propTypes = {
   })),
   labels: PropTypes.array.isRequired,
   quotes: PropTypes.array.isRequired,
+  forums: PropTypes.array.isRequired,
   handleUpdatePublicationField: PropTypes.func.isRequired,
   handleUpdatePublicationTitle: PropTypes.func.isRequired,
   handleUpdatePublicationEdit: PropTypes.func.isRequired,

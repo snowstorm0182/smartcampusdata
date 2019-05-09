@@ -9,7 +9,8 @@ class Publication extends React.Component
   {
     public static defaultProps = {
         tags: [],
-        notes: []
+        notes: [],
+        forums: [],
     };
 
     constructor(props) {
@@ -85,6 +86,12 @@ class Publication extends React.Component
         this.fileReader = new FileReader();
         this.fileReader.onloadend = this.handleQuoteFileRead;
         this.fileReader.readAsText(file);
+    }
+
+    nullforums(){
+      //if (!this.props.forums.includes({id:0,text:'--'}))
+      return this.props.forums.concat([{id:0,text:'--'}]);
+      //return this.props.forums;
     }
 
 
@@ -203,7 +210,15 @@ class Publication extends React.Component
       onChange={(e) =>  this.props.handleUpdatePublicationTags(this.props.id, [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
       {this.props.labels
         .sort((a, b)=> a.title.localeCompare(b.title))
-        .map((i,idx) => (<option key={i.id} value={i.id+'ss'+idx}>{i.title}</option>))}
+        .map((i,idx) => (<option key={i.id} value={i.id}>{i.title}</option>))}
+    </select>
+    <select
+      name="forum"
+      defaultValue={this.props.forum}
+      onChange={(e) =>  this.props.handleUpdatePublicationField(this.props.id, {forum:e.target.value})}>
+      {this.nullforums()
+        .sort((a, b)=> a.text.localeCompare(b.text))
+        .map((i,idx) => (<option key={i.id+'forum'} value={i.id}>{i.text}</option>))}
     </select>
     <button type="button" onClick={() => this.props.handleDeletePublication(this.props.id)}>Delete</button>
   </div>):null)}</li>);
