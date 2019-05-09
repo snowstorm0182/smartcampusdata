@@ -82,7 +82,9 @@ const NodeApp = ({
   <h3>forums</h3>
   {forums.map((n)=>(
     <span key={n.id}>
-      <span title={n.comment}>
+      <span title={n.comment}
+      style={{    maxWidth: '19vw',
+    display: 'inline-block'}}>
       {n.text}
       </span>&nbsp;
       <span onClick={(e) => handleDeleteNode('forums', n.id)}>
