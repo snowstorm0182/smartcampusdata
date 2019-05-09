@@ -73,7 +73,7 @@ class App extends React.Component {
     super(props);
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.state = {
-      filters: ['imported','exluded'],
+      filters: ['imported','exluded','forums'],
       showpublications: false,
       showlabels: false,
       showquotes: false,

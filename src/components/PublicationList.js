@@ -7,6 +7,9 @@ const PublicationList = ({filters, publications, labels, quotes, forums, handleU
 <ul style={{paddingLeft : '0'}}>
   {publications
     .filter((i) => (!filters.includes(i.state)))
+    .filter((i)=>(
+      (!filters.includes('forums') && i.forum) || filters.includes('forums')
+    ))
     .map((publication) => <Publication
     filters={filters}
     key={publication.id}

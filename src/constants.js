@@ -20,6 +20,6 @@ export const UPDATE_NODE = 'UPDATE_NODE';
 export const DELETE_NODE = 'DELETE_NODE';
 export const LOAD_NODES = 'LOAD_NODES';
 export const LOAD_ALL = 'LOAD_ALL';
-export const FILTERS = ['','imported','exluded'];
+export const FILTERS = ['','imported','exluded','forums'];
 export const STATES = ['','imported','exluded','focus','processed'];
 export const WEIGHTS = ['','3','2','1','0','-1'];
