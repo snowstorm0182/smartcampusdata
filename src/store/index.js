@@ -7,6 +7,8 @@ const initialState = {
   publications: [],
   labels: [],
   quotes: [],
+  forums: [],
+  todos: [],
   //live only
   visibility: {addPublication:false},
 };

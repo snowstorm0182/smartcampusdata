@@ -45,6 +45,7 @@ import { combineReducers } from 'redux'
 import publications from './publications'
 import labels from './labels'
 import quotes from './quotes'
+import nodes from './nodes'
 
 function visibility(state = [], { type, payload }) {
   switch (type) {
@@ -53,9 +54,22 @@ function visibility(state = [], { type, payload }) {
   }
 }
 
+function nodesOf(reducerFunction, reducerName) {
+  return (state, action) => {
+    const { type, table } = action
+    const isInitializationCall = state === undefined
+    if ( (table !== reducerName.toLowerCase() || !table) && type !== reducerName && !isInitializationCall) return state
+
+    return reducerFunction(state, action, reducerName)
+  }
+  return nodes;
+}
+
 export default combineReducers({
   publications,
   labels,
   quotes,
+  forums:nodesOf(nodes, 'FORUMS'),
+  todos:nodesOf(nodes, 'TODOS'),
   visibility
 })

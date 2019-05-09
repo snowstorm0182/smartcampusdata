@@ -16,6 +16,8 @@ import {
   ADD_QUOTE,
   UPDATE_QUOTE,
   DELETE_QUOTE,
+  UPDATE_NODE,
+  DELETE_NODE,
 } from '../constants';
 import db from '../db';
 
@@ -199,14 +201,19 @@ export function updateLabel(id, title) {
   };
 }
 
-export function loadQuotes(action) {
+  export function loadNodes(action) {
+    var table = [
+      {id:LOAD_QUOTES, table:'quotes'},
+      {id:'FORUMS', table:'forums'},
+      {id:'TODOS', table:'todos'},
+    ].find(x => x.id === action).table;
   return (dispatch) => {
-    db.table('quotes')
+    db.table(table)
       .toArray()
-      .then((quotes) => {
+      .then((nodes) => {
         dispatch({
-          type: LOAD_QUOTES,
-          payload: quotes,
+          type: action,
+          payload: nodes,
         });
       });
   };
@@ -226,6 +233,21 @@ export function addQuote(text) {
   }
 }
 
+export function addNode(type, text) {
+  return (dispatch) => {
+    const nodeToAdd = { text };
+    db.table(type)
+      .add(nodeToAdd)
+      .then((id) => {
+         dispatch({
+           type: 'ADD_NODE',
+           payload: Object.assign({}, nodeToAdd, { id }),
+           table:type,
+         });
+      });
+  }
+}
+
 export function deleteQuote(id) {
   return (dispatch) => {
     db.table('quotes')
@@ -239,6 +261,20 @@ export function deleteQuote(id) {
   };
 }
 
+export function deleteNode(type, id) {
+  return (dispatch) => {
+    db.table(type)
+      .delete(id)
+      .then(() => {
+        dispatch({
+          type: DELETE_NODE,
+          payload: id,
+          table: type,
+        });
+      });
+  };
+}
+
 export function updateQuote(id, key, val) {
   return (dispatch) => {
     db.table('quotes')
@@ -247,6 +283,26 @@ export function updateQuote(id, key, val) {
         dispatch({
           type: UPDATE_QUOTE,
           payload: { id, key: key, val: val },
+        });
+      });
+  };
+}
+
+export function updateNode(type, id, key, val) {
+  console.log('db', type, id, key, val);
+    var table = [
+      {id:'quotes', table:'quotes'},
+      {id:'forums', table:'forums'},
+      {id:'todos', table:'todos'},
+    ].find(x => x.id === type).table;
+  return (dispatch) => {
+    db.table(table)
+      .update(id, { [key]: val })
+      .then(() => {
+        dispatch({
+          type: UPDATE_NODE,
+          payload: { id, key: key, val: val },
+          table: table,
         });
       });
   };

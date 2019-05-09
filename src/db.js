@@ -21,5 +21,22 @@ db.version(3).stores({
   notes: '++id,publicationsId',
   notelabels: '++id,notesId,labelsId',
 });
+db.version(4).stores({
+  labels: '++id,title',
+  quotes: '++id',
+  forums: '++id',
+  publications: '++id',
+  notes: '++id,publicationsId',
+  notelabels: '++id,notesId,labelsId',
+});
+db.version(5).stores({
+  labels: '++id,title',
+  quotes: '++id',
+  forums: '++id',
+  todos: '++id',
+  publications: '++id',
+  notes: '++id,publicationsId',
+  notelabels: '++id,notesId,labelsId',
+});
 
 export default db;

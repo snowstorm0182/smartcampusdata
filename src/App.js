@@ -22,11 +22,14 @@ store.dispatch(loadLabels(LOAD_LABELS));
 
 // QUOTES
 import QuoteApp from './containers/QuoteApp';
+import NodeApp from './containers/NodeApp';
 
-import {loadQuotes} from './actions';
-import {LOAD_QUOTES} from './constants';
+import {loadNodes} from './actions';
+import {LOAD_QUOTES, LOAD_NODES} from './constants';
 
-store.dispatch(loadQuotes(LOAD_QUOTES));
+store.dispatch(loadNodes(LOAD_QUOTES));
+store.dispatch(loadNodes('FORUMS'));
+store.dispatch(loadNodes('TODOS'));
 
 import logo from './logo.svg';
 
@@ -150,27 +153,41 @@ class App extends React.Component {
             key={i} onClick={(e) => this.handleFilterChange(i)}>{i}</button>))}
         </div>
         <Provider store={store}>
-          {this.state.showpublications ? (<PublicationApp filters={this.state.filters} />):null}
-          {this.state.showlabels ? (<LabelApp />):null}
-          {this.state.showquotes ? (<QuoteApp />):null}
-        </Provider>
-        {this.state.showtools ? (
-          <div style={{margin:'1em'}}>
-            <label>Import/export </label>
-            <input type='file'
-                   id='file'
-                   className='input-file'
-                   accept='.json'
-                   onChange={e => this.handleFileChosen(e.target.files[0])}
-            />
-            <textarea onChange={(e) => this._import(e.target.value)} />
-            <button onClick={(e) => this._export()}>Export</button>
-            <div>
-              <label>Import quotes</label>
-              <textarea onChange={(e) => this._import_quotes(e.target.value)} />
+          <div id="layout">
+            <div id="left" className="column">
+              <div className="top-left"></div>
+              <div className="bottom">
+                <NodeApp />
+              </div>
+            </div>
+            <div id="right" className="column">
+              <div className="top-right">
+                {this.state.showtools ? (
+                  <div style={{margin:'1em'}}>
+                    <label>Import/export </label>
+                    <input type='file'
+                           id='file'
+                           className='input-file'
+                           accept='.json'
+                           onChange={e => this.handleFileChosen(e.target.files[0])}
+                    />
+                    <textarea onChange={(e) => this._import(e.target.value)} />
+                    <button onClick={(e) => this._export()}>Export</button>
+                    <div>
+                      <label>Import quotes</label>
+                      <textarea onChange={(e) => this._import_quotes(e.target.value)} />
+                    </div>
+                  </div>
+                ):null}
+              </div>
+              <div className="bottom">
+                {this.state.showpublications ? (<PublicationApp filters={this.state.filters} />):null}
+                {this.state.showlabels ? (<LabelApp />):null}
+                {this.state.showquotes ? (<QuoteApp />):null}
+              </div>
             </div>
           </div>
-        ):null}
+        </Provider>
       </div>
     );
   }
