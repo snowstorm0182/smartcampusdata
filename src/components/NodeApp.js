@@ -75,21 +75,21 @@ const NodeApp = ({
         {n.text}
       </span>&nbsp;
       <span onClick={(e) => handleDeleteNode('todos', n.id)}>
-      x
+      ⌫
       </span>
     </span>
   ))}
   <h3>forums</h3>
   {forums.map((n)=>(
     <span key={n.id}>
-      <span>
+      <span title={n.comment}>
       {n.text}
       </span>&nbsp;
       <span onClick={(e) => handleDeleteNode('forums', n.id)}>
-      x
+      ⌫
       </span>&nbsp;
       <span onClick={(e) => handleUpdateNode('forums', n.id, 'open', !n.open)}>
-      o
+      {n.comment ? '⇲':'✍'}
       </span>
       {
         n.open ? (
