@@ -1,0 +1,19 @@
+# sample
+{"id": 1, "quotes": [
+  {"text": "fooo", "type": "terms"},
+  {"text": "bar", "type": ""}
+]}
+
+# comment
+labels: 'top--deeper/'
+desc: ''
+terms: ''
+type: 'justification/component/architecture/validation'
+
+# table
+<!-- https://www2.le.ac.uk/offices/ld/resources/writing/writing-resources/literature-review -->
+possible theoretical perspectives;
+possible methods;
+sets of assumptions;
+sample profiles;
+possible explanations.
