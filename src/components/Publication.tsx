@@ -201,7 +201,9 @@ class Publication extends React.Component
       defaultValue={this.props.tags}
       multiple
       onChange={(e) =>  this.props.handleUpdatePublicationTags(this.props.id, [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
-      {this.props.labels.map((i) => (<option key={i.id} value={i.id}>{i.title}</option>))}
+      {this.props.labels
+        .sort((a, b)=> a.title.localeCompare(b.title))
+        .map((i,idx) => (<option key={i.id} value={i.id+'ss'+idx}>{i.title}</option>))}
     </select>
     <button type="button" onClick={() => this.props.handleDeletePublication(this.props.id)}>Delete</button>
   </div>):null)}</li>);
