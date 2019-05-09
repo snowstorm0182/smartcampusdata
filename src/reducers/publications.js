@@ -13,7 +13,7 @@ import {
 export default function publications(state = [], { type, payload }) {
   switch (type) {
     case LOAD_PUBLICATIONS: return payload;
-    case ADD_PUBLICATION: return [...state, payload];
+    case ADD_PUBLICATION: return [payload, ...state];
     case UPDATE_PUBLICATION: {
       const publicationToUpdate = state.find((publication) => publication.id === payload.id);
       return [
