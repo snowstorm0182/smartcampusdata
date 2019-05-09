@@ -149,7 +149,14 @@ class PublicationExport extends React.Component {
         [...new Set(this.filteredPublications().map(item => item.crossref['container-title'][0]))]
         .map((publication) => <tr
         key={publication}>
-        <td>{publication}</td>
+        <td>{publication} &nbsp;
+        [articles:
+        {
+          this.filteredPublications().map(item => item.crossref['container-title'][0])
+          .reduce(function(n, val) {
+              return n + (val === publication);
+          }, 0)
+        }]</td>
         </tr>)}</tbody>
     </table>
     </div>
