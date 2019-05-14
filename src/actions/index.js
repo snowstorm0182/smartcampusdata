@@ -296,6 +296,7 @@ export function updateNode(type, id, key, val) {
       {id:'todos', table:'todos'},
       {id:'sections', table:'sections'},
     ].find(x => x.id === type).table;
+    //console.log(type, id, key, val)
   return (dispatch) => {
     db.table(table)
       .update(id, { [key]: val })

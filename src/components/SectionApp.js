@@ -51,18 +51,28 @@ const SectionApp = ({
   }) => <div className="NodeApp">
   <h3>Sections</h3>
   <AddSection handleAddNode={handleAddNode} type='sections' />
-  {sections.map((n)=>(
+  {sections.sort((a, b)=> a.weight - b.weight).map((n)=>(
     <span key={n.id}
-    style={{display: 'block'}}>
+    style={{display: 'block', overflow:'hidden'}}>
+    <span onClick={(e) => handleUpdateNode('sections', n.id, 'weight', (n.weight || 0) +1)}
+    style={{float: 'left'}}>
+    ▼
+    </span>
+    <span onClick={(e) => handleUpdateNode('sections', n.id, 'weight', (n.weight || 0) -1)}
+    style={{float: 'left'}}>
+    ▲{n.weight}
+    </span>
       <span title={n.content}
       style={{    maxWidth: '19vw',
     display: 'inline-block'}}>
-      {n.text}
+      {n.open ? (<input type="text" defaultValue={n.text} onBlur={(e) => handleUpdateNode('sections', n.id, 'text', e.target.value)} />) : n.text}
       </span>&nbsp;
-      <span onClick={(e) => handleDeleteNode('sections', n.id)}>
+      <span onClick={(e) => handleDeleteNode('sections', n.id)}
+      >
       ⌫
       </span>&nbsp;
-      <span onClick={(e) => handleUpdateNode('sections', n.id, 'open', !n.open)}>
+      <span onClick={(e) => handleUpdateNode('sections', n.id, 'open', !n.open)}
+      style={{float: 'right'}}>
       {n.content ? '⇲':'✍'}
       </span>
       {
