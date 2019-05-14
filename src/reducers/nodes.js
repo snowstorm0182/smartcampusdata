@@ -11,6 +11,7 @@ export default function nodes(state = [], { type, payload }, reducerName = '') {
     // NODES
     case LOAD_NODES:
     case 'FORUMS':
+    case 'SECTIONS':
     case 'TODOS': return payload;
     case ADD_NODE: return [...state, payload];
     case UPDATE_NODE: {

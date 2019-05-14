@@ -9,6 +9,7 @@ const initialState = {
   quotes: [],
   forums: [],
   todos: [],
+  sections: [],
   //live only
   visibility: {addPublication:false},
 };

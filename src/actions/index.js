@@ -206,6 +206,7 @@ export function updateLabel(id, title) {
       {id:LOAD_QUOTES, table:'quotes'},
       {id:'FORUMS', table:'forums'},
       {id:'TODOS', table:'todos'},
+      {id:'SECTIONS', table:'sections'},
     ].find(x => x.id === action).table;
   return (dispatch) => {
     db.table(table)
@@ -289,11 +290,11 @@ export function updateQuote(id, key, val) {
 }
 
 export function updateNode(type, id, key, val) {
-  console.log('db', type, id, key, val);
     var table = [
       {id:'quotes', table:'quotes'},
       {id:'forums', table:'forums'},
       {id:'todos', table:'todos'},
+      {id:'sections', table:'sections'},
     ].find(x => x.id === type).table;
   return (dispatch) => {
     db.table(table)

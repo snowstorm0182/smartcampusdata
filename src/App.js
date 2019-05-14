@@ -30,6 +30,7 @@ import {LOAD_QUOTES, LOAD_NODES} from './constants';
 store.dispatch(loadNodes(LOAD_QUOTES));
 store.dispatch(loadNodes('FORUMS'));
 store.dispatch(loadNodes('TODOS'));
+store.dispatch(loadNodes('SECTIONS'));
 
 import logo from './logo.svg';
 

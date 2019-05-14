@@ -38,5 +38,15 @@ db.version(5).stores({
   notes: '++id,publicationsId',
   notelabels: '++id,notesId,labelsId',
 });
+db.version(6).stores({
+  labels: '++id,title',
+  quotes: '++id',
+  forums: '++id',
+  todos: '++id',
+  sections: '++id',
+  publications: '++id',
+  notes: '++id,publicationsId',
+  notelabels: '++id,notesId,labelsId',
+});
 
 export default db;

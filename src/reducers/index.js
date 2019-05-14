@@ -71,5 +71,6 @@ export default combineReducers({
   quotes,
   forums:nodesOf(nodes, 'FORUMS'),
   todos:nodesOf(nodes, 'TODOS'),
+  sections:nodesOf(nodes, 'SECTIONS'),
   visibility
 })
