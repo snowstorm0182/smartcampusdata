@@ -1,6 +1,9 @@
 import * as React from 'react';
 import * as PropTypes from 'prop-types';
 import { Component } from 'react';
+var CodeMirror = require('react-codemirror');
+require('codemirror/lib/codemirror.css');
+require('codemirror/mode/markdown/markdown');
 
 class AddNode extends Component<any, any> {
     static propTypes = {
@@ -49,7 +52,8 @@ const SectionApp = ({
   <h3>Sections</h3>
   <AddSection handleAddNode={handleAddNode} type='sections' />
   {sections.map((n)=>(
-    <span key={n.id}>
+    <span key={n.id}
+    style={{display: 'block'}}>
       <span title={n.content}
       style={{    maxWidth: '19vw',
     display: 'inline-block'}}>
@@ -64,11 +68,13 @@ const SectionApp = ({
       {
         n.open ? (
           <div>
-          <label>
-          <textarea
-            defaultValue={n.content}
-            onBlur={(e) => handleUpdateNode('sections', n.id, 'content', e.target.value)}
-          /></label></div>
+        		<CodeMirror value={n.content}
+            onChange={(e) => handleUpdateNode('sections', n.id, 'content', e)}
+            options={{
+              lineNumbers: true,
+              mode: 'markdown',
+            }} />
+          </div>
         ):null
       }
     </span>

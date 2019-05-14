@@ -28,3 +28,11 @@
 }
 
 ul {list-style: none;}
+
+.ReactCodeMirror {
+  max-width: 80ch;
+  border-right: 1px solid lightgrey;
+}
+.CodeMirror pre {
+    text-align: left;
+}
