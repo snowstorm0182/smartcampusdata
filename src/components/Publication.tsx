@@ -4,6 +4,9 @@ import {STATES, WEIGHTS} from '../constants';
 import {appendQuotes} from '../actions';
 import db from '../db';
 
+let anyNavigator: any
+anyNavigator = window.navigator
+
 class Publication extends React.Component
   <any, any>
   {
@@ -112,7 +115,7 @@ class Publication extends React.Component
           backgroundColor:'#f8e1e1'
         }:{overflow: 'hidden',padding: '.5em .5em 1em',})
     )}>
-    <h3><span onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
+    <h3 id={'publication-'+this.props.id}><span onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
       style={{
         textDecoration : this.props.state === 'exluded' ? 'line-through':'none',
       }}
@@ -142,7 +145,10 @@ class Publication extends React.Component
           onChange={(e) =>  this.props.handleUpdatePublicationField(this.props.id, {weight: e.target.value})}> // [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
           {WEIGHTS.map((i) => (<option key={i} value={i}>{i}</option>))}
         </select>&nbsp;
-      {"id:" + this.props.id + ", "}
+        <span
+        onClick={(e) => {anyNavigator.clipboard.writeText('@pubId/'+this.props.id+'/'+this.state.author)}}>
+        id:</span>
+      {this.props.id + ", "}
       {
       "notes:" + (this.props.notes ? this.props.notes.length : '0') + ", " + this.props.labels.filter((i) => (this.props.tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
       this.state.author + " - " + this.state.forum

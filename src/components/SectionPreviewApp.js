@@ -11,9 +11,23 @@ const SectionPreviewApp = ({
   <div className="subcontent">
     <h3>Preview</h3>
     <h2>Table of contents</h2>
-    <ReactMarkdown source={sections.sort((a, b)=> a.weight - b.weight).map((n)=>(
-      "\n# " + n.text + "\n\n" + (n.content || "").replace(/#/g, "##")
-    )).join("\n\n").replace(/\n#/g, "##")}
+    <ReactMarkdown
+    source={
+      sections.sort((a, b)=> a.weight - b.weight)
+      .map((n)=>(
+        "\n# " + n.text + "\n\n" + (n.content || "").replace(/#/g, "##")
+      ))
+      .join("\n\n")
+      .replace(/\n#/g, "##")
+      .replace(
+        /\b\pubId\S+\b/g,
+        function(_, $1, $2) {
+        let id = _.split('/')[1]
+        let name = _.split('/')[2]
+        // elem.scrollIntoView() someday mayby
+        return '['+name+'](#publication-'+id+')'
+      })
+    }
     renderers={{root: ({ children }) => {
       const TOCLines = children.reduce((acc, { key, props }) => {
         if (key.indexOf('heading') !== 0) {
