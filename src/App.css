@@ -40,10 +40,18 @@ ul {list-style: none;}
 .SectionPreviewApp .subcontent{
   padding: 1em;
   background-color: #eee;
-  max-height: 100vh;
-  overflow: auto;
 }
 
 .SectionPreviewApp li{
   list-style: disc;
+}
+
+/* Make stuff scrollable */
+.SectionPreviewApp .subcontent,
+#left,
+.PublicationApp,
+.LabelApp,
+.QuoteApp{
+  max-height: 100vh;
+  overflow: auto;
 }
