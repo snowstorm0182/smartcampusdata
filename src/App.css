@@ -36,3 +36,14 @@ ul {list-style: none;}
 .CodeMirror pre {
     text-align: left;
 }
+
+.SectionPreviewApp .subcontent{
+  padding: 1em;
+  background-color: #eee;
+  max-height: 100vh;
+  overflow: auto;
+}
+
+.SectionPreviewApp li{
+  list-style: disc;
+}

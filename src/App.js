@@ -23,6 +23,7 @@ store.dispatch(loadLabels(LOAD_LABELS));
 // QUOTES
 import QuoteApp from './containers/QuoteApp';
 import NodeApp from './containers/NodeApp';
+import SectionPreviewApp from './containers/SectionPreviewApp';
 
 import {loadNodes} from './actions';
 import {LOAD_QUOTES, LOAD_NODES} from './constants';
@@ -75,6 +76,7 @@ class App extends React.Component {
     this.handleFilterChange = this.handleFilterChange.bind(this);
     this.state = {
       filters: ['imported','exluded','forums'],
+      showpreview: false,
       showpublications: false,
       showlabels: false,
       showquotes: false,
@@ -126,6 +128,11 @@ class App extends React.Component {
         </header>
         <div style={{transform: 'translateY(-2em)',color: 'white',height: '0',}}>
           views:<button
+            style={{
+              color : !this.state.showpreview ? 'gray':'black',
+            }}
+            key='showpreview' onClick={(e) => this.setState({showpreview: !this.state.showpreview})}>preview</button>
+          <button
             style={{
               color : !this.state.showpublications ? 'gray':'black',
             }}
@@ -182,6 +189,7 @@ class App extends React.Component {
                 ):null}
               </div>
               <div className="bottom">
+                {this.state.showpreview ? (<SectionPreviewApp />):null}
                 {this.state.showpublications ? (<PublicationApp filters={this.state.filters} />):null}
                 {this.state.showlabels ? (<LabelApp />):null}
                 {this.state.showquotes ? (<QuoteApp />):null}
