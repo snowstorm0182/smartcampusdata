@@ -3,6 +3,7 @@ import * as React from 'react';
 import {STATES, WEIGHTS} from '../constants';
 import {appendQuotes} from '../actions';
 import db from '../db';
+import Select from 'react-select';
 
 let anyNavigator: any
 anyNavigator = window.navigator
@@ -111,20 +112,18 @@ class Publication extends React.Component
 
     render = () => {return (<li
     style={this.props.state === 'focus' ? {
-      overflow: 'hidden',
       outlineOffset: '-.5em',
       padding: '.5em .5em 1em',
       outline: '3px dashed blue',
       backgroundColor:'#ffd955',
     }:(
       this.props.state === 'processed' ? {
-        overflow: 'hidden',
         backgroundColor:'#e4f0f5',
         padding: '.5em .5em 1em',
       }:(
         this.props.state === 'exluded' ? {
           backgroundColor:'#f8e1e1'
-        }:{overflow: 'hidden',padding: '.5em .5em 1em',})
+        }:{padding: '.5em .5em 1em',})
     )}>
     <h3 id={'publication-'+this.props.id}><span onClick={(e) => this.handleToggleNameEdit(!this.props.edit)}
       style={{
@@ -161,8 +160,15 @@ class Publication extends React.Component
         id:</span>
       {this.props.id + ", "}
       {
-      "notes:" + (this.props.notes ? this.props.notes.length : '0') + ", " + this.props.labels.filter((i) => (this.props.tags.includes(i.id.toString()))).map((i) => (i.title+" ")) +
-      this.state.author + " - " + this.state.forum
+      "notes:" + (this.props.notes ? this.props.notes.length : '0')
+      + ", " + this.props.labels.filter(
+        (i) => (
+          this.props.tags.map((t)=>parseInt(t)).includes(i.id)
+        )
+      ).map(
+        (i) => (i.title+" ")
+      ).join()
+      + this.state.author + " - " + this.state.forum
     }</p>
     {(this.state.showabstract ? (
       <p
@@ -227,15 +233,29 @@ class Publication extends React.Component
       </span>
     ))}
     <button type="button" onClick={() =>  this._handleAddPublicationNote(this.props.id)}>Add note</button></div>
-    <select
-      name="tags"
-      defaultValue={this.props.tags}
-      multiple
-      onChange={(e) =>  this.props.handleUpdatePublicationTags(this.props.id, [].filter.call(e.target.options, o => o.selected).map(o => o.value))}>
-      {this.props.labels
-        .sort((a, b)=> a.title.localeCompare(b.title))
-        .map((i,idx) => (<option key={i.id} value={i.id}>{i.title}</option>))}
-    </select>
+    <Select
+        defaultValue={this.props.tags.map((i)=>(
+          { id:parseInt(i), value:parseInt(i), label:(
+            this.props.labels.filter((l)=>l.id === parseInt(i))[0]['title']
+          )}
+        ))}
+        getOptionLabel={opt => opt.label}
+        options={Array.from(new Set(this.props.labels))
+          .sort((a, b)=> a['title'].localeCompare(b['title']))
+          .map((l)=>{
+            return {id:l['id'],value:l['id'],label:l['title']};
+          })
+        }
+        {...{
+          isMulti:true,
+          isSearchable: false,
+          onChange: (options) =>  {
+            this.props.handleUpdatePublicationTags(this.props.id, options.map((o)=>(
+              typeof o === 'object' ? o.value : o
+            )))
+          },
+        }}
+      />
     <select
       name="forum"
       defaultValue={this.props.forum}

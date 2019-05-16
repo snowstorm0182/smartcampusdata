@@ -46,6 +46,9 @@ class PublicationList extends React.Component
     return this.props.publications.filter((p)=>{
       if(this.state.filter.length === 0) {return true};
       if(matchingQuotes.filter((q)=>q.publicationId === p.id).length > 0) {return true};
+      if( p.tags && [p.tags.map((t)=>parseInt(t)),
+        matchingLabels.map((ml)=>ml.id)
+        ].reduce(common).length > 0) {return true};
       return false;
     });
   }
@@ -56,7 +59,8 @@ class PublicationList extends React.Component
         value={this.state.filter}
         onChange={this.handleMultiChange}
         isMulti
-        options={this.props.labels.map((l)=>{return {value:l.id,label:l.title}})}
+        getOptionValue ={(option)=>option.id}
+        options={this.props.labels.map((l)=>{return {id:l.id,value:'f'+l.id,label:l.title}})}
       />
     <ul style={{paddingLeft : '0'}}>
       {this.statefiltered()
