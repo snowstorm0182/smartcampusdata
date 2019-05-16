@@ -72,7 +72,7 @@ const SectionApp = ({
       ⌫
       </span>&nbsp;
       <span onClick={(e) => handleUpdateNode('sections', n.id, 'open', !n.open)}
-      style={{float: 'right'}}>
+      style={{float: 'right', marginRight: '1em'}}>
       {n.content ? '⇲':'✍'}
       </span>
       {

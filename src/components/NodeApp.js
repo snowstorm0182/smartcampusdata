@@ -92,7 +92,8 @@ const NodeApp = ({
       <span onClick={(e) => handleDeleteNode('forums', n.id)}>
       ⌫
       </span>&nbsp;
-      <span onClick={(e) => handleUpdateNode('forums', n.id, 'open', !n.open)}>
+      <span onClick={(e) => handleUpdateNode('forums', n.id, 'open', !n.open)}
+      style={{float: 'right', marginRight: '1em'}}>
       {n.comment ? '⇲':'✍'}
       </span>
       {
