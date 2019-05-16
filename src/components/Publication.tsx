@@ -248,7 +248,6 @@ class Publication extends React.Component
         }
         {...{
           isMulti:true,
-          isSearchable: false,
           onChange: (options) =>  {
             this.props.handleUpdatePublicationTags(this.props.id, options.map((o)=>(
               typeof o === 'object' ? o.value : o
