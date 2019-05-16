@@ -151,7 +151,7 @@ class PublicationExport extends React.Component {
       {
         [...new Set(this.filteredPublications().map(item => item.crossref['container-title'][0]))]
         .map((publication) => <tr
-        key={publication}>
+        key={'forumtablelistitem-'+publication}>
         <td>{publication} &nbsp;
         [articles:
         {
