@@ -18,10 +18,11 @@ class Publication extends React.Component
 
     constructor(props) {
       super(props);
-      this.state.author = Object.keys(this.props.crossref).length !== 0 ?
-        (this.props.crossref['author'] ?
-          this.props.crossref['author'][0]['family'] : ''):
-        this.props.semanticscholar.authors[0].name;
+      this.state.author = this.props.localauthor ? this.props.localauthor :
+        (Object.keys(this.props.crossref).length !== 0 ?
+          (this.props.crossref['author'] ?
+            this.props.crossref['author'][0]['family'] : ''):
+          this.props.semanticscholar.authors[0].name);
       this.state.forum = Object.keys(this.props.crossref).length !== 0 ?
         this.props.crossref['container-title'][0]:
         'preprint'
@@ -40,6 +41,15 @@ class Publication extends React.Component
 
     handleToggleNameEdit(toggle) {
       this.props.handleUpdatePublicationEdit(this.props.id, toggle)
+    }
+
+    handleLocalAuthorLastnameUpdate(id, name) {
+      this.setState(state => ({
+        author: name,
+      }));
+      this.props.handleUpdatePublicationField(id,
+        {localauthor: name}
+      );
     }
 
     _handleUpdatePublicationNotes(id, nth, newValue){
@@ -175,18 +185,25 @@ class Publication extends React.Component
     )}
     </div>
     ):null)}
-    {(this.props.edit ? (<div><input
+    {(this.props.edit ? (<div>
+    <span><label>title:<input
       name="title"
       type="text"
       value={this.props.title}
       onChange={(e) => this.props.handleUpdatePublicationTitle(this.props.id, e.target.value)}
-    />
-    <input
-      name="title"
+    />;</label></span>
+    <span><label>author:<input
+      name="author"
+      type="text"
+      value={this.state.author}
+      onChange={(e) => this.handleLocalAuthorLastnameUpdate(this.props.id, e.target.value)}
+    />;</label></span>
+    <span><label>abstract:<input
+      name="abstract"
       type="text"
       value={this.props.abstract}
       onChange={(e) => this.props.handleUpdatePublicationField(this.props.id, { abstract: e.target.value })}
-    />
+    />;</label></span>
     <input
       name="done"
       type="checkbox"
