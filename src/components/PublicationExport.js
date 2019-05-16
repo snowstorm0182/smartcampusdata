@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as PropTypes from 'prop-types';
 
 import Publication from './Publication';
+import PublicationObject from '../helpers/PublicationObject';
 
 class PublicationExport extends React.Component {
 
@@ -21,6 +22,7 @@ class PublicationExport extends React.Component {
 
   filteredPublications = () => {
     return this.props.publications
+    .map((p)=>new PublicationObject(p))
     .filter((i) => (!i.arxiv))
     .filter((i) => (!this.props.filters.includes(i.state)))
   }
@@ -102,9 +104,10 @@ class PublicationExport extends React.Component {
             key={publication.id}>
             <td>{publication.id}</td>
             <td>{publication.title.trim()}</td>
-            <td>{publication.crossref['container-title'][0].trim()}</td>
+            <td>{publication.getPublishedAt().trim()}</td>
             <td><a target='_blank' href={'https://dx.doi.org/'+publication.doi.trim()}>{publication.doi.trim()}</a></td>
-            </tr>)}</tbody>
+            </tr>)}
+          </tbody>
         </table>
       ):(
         <table style={{paddingLeft : '0', display : this.state.table ? 'table' : 'none'}}>

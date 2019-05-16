@@ -19,7 +19,8 @@ class Publication extends React.Component
     constructor(props) {
       super(props);
       this.state.author = Object.keys(this.props.crossref).length !== 0 ?
-        this.props.crossref['author'][0]['family']:
+        (this.props.crossref['author'] ?
+          this.props.crossref['author'][0]['family'] : ''):
         this.props.semanticscholar.authors[0].name;
       this.state.forum = Object.keys(this.props.crossref).length !== 0 ?
         this.props.crossref['container-title'][0]:
