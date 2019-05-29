@@ -4,21 +4,31 @@ import { Component } from 'react';
 const ReactMarkdown = require('react-markdown');
 const createElement = React.createElement;
 
+let anyNavigator: any
+anyNavigator = window.navigator
+
 const SectionPreviewApp = ({
   sections
 }) => <div className="SectionPreviewApp"
   style={{textAlign: 'left', }} >
   <div className="subcontent">
     <h3>Preview</h3>
+    <button onClick={(e) => {anyNavigator.clipboard.writeText(
+      sections.map((n)=>(
+        "\n# " + n.text + "\n\n" + (n.content || "").replace(/#/g, "##")
+      ))
+      .join("\n\n")
+      .replace(/\n#/g, "##")
+    )}}>Preview</button>
     <h2>Table of contents</h2>
     <ReactMarkdown
     source={
       sections.sort((a, b)=> a.weight - b.weight)
       .map((n)=>(
-        "\n# " + n.text + "\n\n" + (n.content || "").replace(/#/g, "##")
+        "\n\n# " + n.text + "\n\n" + (n.content || "").replace(/#/g, "##")
       ))
       .join("\n\n")
-      .replace(/\n#/g, "##")
+      .replace(/\n#/g, "\n#")
       .replace(
         /\b\pubId\S+\b/g,
         function(_, $1, $2) {
