@@ -23,6 +23,7 @@ class PublicationExport extends React.Component {
   filteredPublications = () => {
     return this.props.publications
     .map((p)=>new PublicationObject(p))
+    .filter((i) => ( Object.keys(i.crossref).length ))
     .filter((i) => (!i.arxiv))
     .filter((i) => (!this.props.filters.includes(i.state)))
   }

@@ -6,8 +6,8 @@ class PublicationObject {
     }
   }
   getPublishedAt = () => {
-    return this.crossref['container-title'].length > 0 ? `${this.crossref['container-title'][0]}`:
-      (this.crossref['publisher'] ? this.crossref['publisher'] :'');
+    return (Object.keys(this.crossref).length && (this.crossref['container-title'].length > 0)) ? `${this.crossref['container-title'][0]}`:
+      (Object.keys(this.crossref).length && this.crossref['publisher'] ? this.crossref['publisher'] :'');
   }
 }
 
