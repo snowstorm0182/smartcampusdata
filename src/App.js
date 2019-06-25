@@ -5,6 +5,7 @@ import Hello from './components/StatefulHello';
 
 // PUBLICATIONS
 import PublicationApp from './containers/PublicationApp';
+import PublicationTableApp from './containers/PublicationTableApp';
 
 import {loadPublications} from './actions';
 import store from './store';
@@ -78,6 +79,7 @@ class App extends React.Component {
       filters: ['imported','exluded','forums'],
       showpreview: false,
       showpublications: false,
+      showpublicationstable: false,
       showlabels: false,
       showquotes: false,
       showtools: false,
@@ -139,6 +141,11 @@ class App extends React.Component {
             key='showpublications' onClick={(e) => this.setState({showpublications: !this.state.showpublications})}>publications</button>
           <button
             style={{
+              color : !this.state.showpublicationstable ? 'gray':'black',
+            }}
+            key='showpublicationstable' onClick={(e) => this.setState({showpublicationstable: !this.state.showpublicationstable})}>table</button>
+          <button
+            style={{
               color : !this.state.showlabels ? 'gray':'black',
             }}
             key='showlabels' onClick={(e) => this.setState({showlabels: !this.state.showlabels})}>labels</button>
@@ -161,6 +168,7 @@ class App extends React.Component {
             key={i} onClick={(e) => this.handleFilterChange(i)}>{i}</button>))}
         </div>
         <Provider store={store}>
+          {this.state.showpublicationstable ? (<PublicationTableApp filters={this.state.filters} />):(
           <div id="layout">
             <div id="left" className="column">
               <div className="top-left"></div>
@@ -196,6 +204,7 @@ class App extends React.Component {
               </div>
             </div>
           </div>
+          )}
         </Provider>
       </div>
     );
