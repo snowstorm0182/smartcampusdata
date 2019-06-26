@@ -102,6 +102,7 @@ class PublicationTable extends React.Component
         <th>Labels</th>
         <th>Notes</th>
         <th>Highlights</th>
+        <th>Apa</th>
       </tr></thead>
       <tbody>
       {this.statefiltered()
@@ -144,6 +145,7 @@ class PublicationTable extends React.Component
             this.props.quotes.filter((i) => (i.publicationId == publication.id)).length > 0 ? "exist": null
           )}
           </td>
+          <td>{publication.apa}</td>
         </tr>
       )}
       </tbody>
