@@ -6,8 +6,9 @@ import {
 } from '../actions';
 
 function mapStateToProps(state) {
-  const { sections } = state;
+  const { publications, sections } = state;
   return {
+    publications,
     sections,
   };
 }

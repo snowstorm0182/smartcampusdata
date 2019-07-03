@@ -16,8 +16,11 @@ class PublicationExport extends React.Component {
     sources:false,
     citations: false,
     references: [],
+    bibtex: [],
     showStates: [],
     apaset: 0,
+    bibset: 0,
+    tmp: [],
   };
 
   filteredPublications = () => {
@@ -77,6 +80,78 @@ class PublicationExport extends React.Component {
     )
   }
 
+  updateBibReferences = (e) => {
+    this.setState(prevState => ({
+      bibtex: [],
+    }));
+
+    var self = this;
+
+    this.filteredPublications()
+    .filter((i) => (i.bibtex))
+    .map((i) => (
+      self.setState(prevState => ({
+        bibtex: [...prevState.bibtex, i.bibtex],
+      }))
+    ));
+//curl -LH "Accept: application/x-bibtex;q=0.5" https://doi.org/10.1126/science.169.3946.635
+    const fetchBibReferences = p => fetch('https://dx.doi.org/' + encodeURIComponent(p.doi),{
+      headers: {"Accept": "application/x-bibtex",}
+    })
+    .then(res => res.text())
+    .then(ref => (p.bibtex = ref))
+    .then(() => {
+      var fixname = p.bibtex.substring(
+            p.bibtex.indexOf("{") + 1,
+            p.bibtex.indexOf(",")
+          );
+      if(fixname){
+        if (fixname.indexOf(' ') > -1 || fixname.indexOf("'") > -1) {
+          console.log(p);
+        }
+        p.bibtex = p.bibtex.split(fixname).join(fixname.split(' ').join('_').split("'").join(''));
+      }
+    })
+    .then(() => (
+     self.setState(prevState => ({
+       bibtex: [...prevState.bibtex, p.bibtex],
+       tmp: [...prevState.tmp, p.id],
+     }))
+    )).then(() => {
+      this.props.handleUpdatePublicationField(p.id, {bibtex: p.bibtex})
+    });
+
+    const fix = p => {
+      var fixname = p.bibtex.substring(
+            p.bibtex.indexOf("{") + 1,
+            p.bibtex.indexOf(",")
+          );
+      if(fixname){
+        if (fixname.indexOf(' ') > -1
+          || fixname.indexOf("'") > -1
+          || fixname.indexOf("’") > -1
+        ) {
+          //console.log(p);
+          p.bibtex = p.bibtex.split(fixname).join(
+            fixname.split(' ').join('_')
+            .split("'").join('')
+            .split("’").join(''));
+          this.props.handleUpdatePublicationField(p.id, {bibtex: p.bibtex})
+        }
+      }
+    }
+    this.filteredPublications().map(fix);
+
+    Promise
+    .all(
+      this.filteredPublications()
+      //.filter((i) => (!i.bibtex))
+      .filter((i) => (!this.state.tmp.includes(i.id)))
+      .slice(0,50) // crossref limit
+      .map(fetchBibReferences)
+    )
+  }
+
   notify(msg,duration){
    var alt = document.createElement("div");
        alt.setAttribute("style","position:fixed;top:10%;left:50%;transform: translateX(-50%);background-color:white;padding:1em;border:1px solid black;");
@@ -120,6 +195,10 @@ class PublicationExport extends React.Component {
                 (<button onClick={(e) => this.updateReferences()}>
                   update { this.state.references.length + '/' + this.filteredPublications().length }
                 </button>):null}
+              {this.state.bibtex.length !== this.filteredPublications().length ?
+                (<button onClick={(e) => this.updateBibReferences()}>
+                  updateb { this.state.bibtex.length + '/' + this.filteredPublications().length }
+                </button>):null}
               {(<button onClick={(e) => {
                   (typeof navigator.clipboard.writeText === "undefined" || !navigator.clipboard) ?
                     (e) => (
@@ -138,6 +217,9 @@ class PublicationExport extends React.Component {
           </tr></thead><tbody><tr><td>
           <textarea id='apatextbody' tabIndex="-1" readOnly rows="10" style={{width:'100%'}}
           value={this.state.references.map((line,idx) => line).join("")}
+          />
+          <textarea id='bibtextbody' tabIndex="-1" readOnly rows="10" style={{width:'100%'}}
+          value={this.state.bibtex.map((line,idx) => line).join("")}
           />
             </td></tr></tbody>
         </table>
