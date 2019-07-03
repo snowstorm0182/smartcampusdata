@@ -15,6 +15,7 @@ class Publication extends React.Component
         tags: [],
         notes: [],
         forums: [],
+        file: "",
     };
 
     constructor(props) {
@@ -38,6 +39,10 @@ class Publication extends React.Component
 
     link(){
       return this.props.arxiv ? 'https://arxiv.org/abs/'+this.props.arxiv.trim() : 'https://dx.doi.org/'+this.props.doi.trim();
+    }
+
+    file(){
+      return this.props.file
     }
 
     handleToggleNameEdit(toggle) {
@@ -129,7 +134,8 @@ class Publication extends React.Component
       style={{
         textDecoration : this.props.state === 'exluded' ? 'line-through':'none',
       }}
-    >{this.props.title}</span><a target='_blank' href={this.link()}>&#11016;</a></h3>
+    >{this.props.title}</span><a target='_blank' href={this.link()}>&#11016;</a>
+    {this.props.file !== "" ? (<a target='_blank' href={this.file()}>&#128190;</a>):null}</h3>
     <p style={{marginTop : '-1em'}}>
       <button name={'showquotes'}
         onClick={(e) => this.onToggle(e, 'showquotes')}
@@ -209,6 +215,12 @@ class Publication extends React.Component
       type="text"
       value={this.props.abstract}
       onChange={(e) => this.props.handleUpdatePublicationField(this.props.id, { abstract: e.target.value })}
+    />;</label></span>
+    <span><label>url:<input
+      name="file"
+      type="text"
+      value={this.props.file}
+      onChange={(e) => this.props.handleUpdatePublicationField(this.props.id, { file: e.target.value })}
     />;</label></span>
     <input
       name="done"
